@@ -1,6 +1,8 @@
-out/
+out
 /LICENSE
-/README.md
-/.gitignore
-/.idea/
-/target/
+README.md
+.gitignore
+.idea
+target
+log
+*.patch
