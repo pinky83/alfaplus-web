@@ -1,7 +1,9 @@
-package model;
+package org.pinky83.alfaplus.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import static org.pinky83.alfaplus.service.PatientServiceMock.counter;
 
 /**
  * Created by Дмитрий on 29.11.2016./
@@ -17,8 +19,8 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(Integer id, String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
-        this.id = id;
+    public Patient(String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
+        this.id = counter.incrementAndGet();
         this.name = name;
         this.birthDate = birthDate;
         this.birthTime = birthTime;

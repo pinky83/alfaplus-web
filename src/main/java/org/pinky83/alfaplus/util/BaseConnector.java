@@ -1,4 +1,4 @@
-package util;
+package org.pinky83.alfaplus.util;
 
 import java.sql.*;
 

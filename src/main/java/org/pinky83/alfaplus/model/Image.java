@@ -1,4 +1,4 @@
-package model;
+package org.pinky83.alfaplus.model;
 
 
 import java.time.LocalDateTime;
