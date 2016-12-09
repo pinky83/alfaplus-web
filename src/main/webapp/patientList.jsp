@@ -7,8 +7,18 @@
 </head>
 <body>
 <h2><a href="index.html">Home</a></h2>
-<h2 align="center">Patient list</h2>
 
+<h1 align="left">Add Patient</h1>
+<form id="editor" action="patients" method="post">
+    Birth date: <input name="birth_date" type="date"/>
+    Name: <input name="name" type="text"/>
+    Comment:  <input name="comment" type="text"/>
+    <br>
+     <input name="Сохранить" type="submit" value="Сохранить!" />
+</form>
+
+<br>
+<h2 align="center">Patient list</h2>
 <table align="center">
     <c:forEach items="${requestScope.patientList}" var="item">
       <%--<c:set var="cleanedDateTime" value="${fn:replace(item.getDateTime(), 'T', ' ')}" />--%>
@@ -16,7 +26,7 @@
             <td style="border: double">${item.getBirthDate()}</td>
             <td style="border: double">${item.getName()}</td>
             <td style="border: double">${item.getComments()}</td>
-            <td style="border: double"><a href="users">Edit</a></td>
+            <td style="border: double"><a rel="editor">Edit</a></td>
             <td style="border: double"><a href="patients?action=delete&id=${item.getId()}">Delete</a></td>
         </tr>
     </c:forEach>

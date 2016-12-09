@@ -5,9 +5,7 @@ import org.pinky83.alfaplus.model.Patient;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -15,7 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PatientServiceMock implements PatientService{
     public static AtomicInteger counter = new AtomicInteger(0);
-    private static List<Patient> patients = Arrays.asList(
+
+    private static List<Patient> firstStage = Arrays.asList(
             new Patient("Масалитин Иван Иванович", LocalDate.of(1983, Month.APRIL, 21), LocalTime.of(12,34), true, "Патологических изменений не выявлено."),
             new Patient("Коваленко Вячеслав Михайлович", LocalDate.of(1983, Month.JANUARY, 18), LocalTime.of(8,15), true, "Сердце асширено влево."),
             new Patient("Песоцкая Мария Николаевна", LocalDate.of(1982, Month.AUGUST, 5), LocalTime.of(15,54), false, "Легочный рисунок усилен."),
@@ -24,6 +23,8 @@ public class PatientServiceMock implements PatientService{
             new Patient("Чуба Людмила Игоревна", LocalDate.of(1983, Month.JUNE, 9), LocalTime.of(19,45), false, "Высокое расположение правого купола диафрагмы."),
             new Patient("Шломенко Александр Иванович", LocalDate.of(1984, Month.JULY, 13), LocalTime.of(10,12), true, "Lob. v. Azygos.")
     );
+
+    private static ArrayList<Patient> patients = new ArrayList<>(firstStage);
 
     @Override
     public List<Patient> getAll() {
