@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Дмитрий on 30.11.2016./
  */
-public class UserServiceMock implements UserService{
+public class UserServiceImpl implements UserService{
     @Override
     public List<User> getAll() {
         return null;

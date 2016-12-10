@@ -1,18 +1,22 @@
-package org.pinky83.alfaplus.service;
+package org.pinky83.alfaplus.repository.mock;
 
 import org.pinky83.alfaplus.model.Patient;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by Дмитрий on 30.11.2016./
+ * Created by Дмитрий on 10.12.2016./
  */
-public class PatientServiceMock implements PatientService{
-    public static AtomicInteger counter = new AtomicInteger(0);
+public class MockPatientRepository {
+    private static AtomicInteger counter;
+    //TODO need to fix static mock repository and inject it via spring
+    private static ConcurrentHashMap<Integer, Patient> mockRepository;
 
     private static List<Patient> firstStage = Arrays.asList(
             new Patient("Масалитин Иван Иванович", LocalDate.of(1983, Month.APRIL, 21), LocalTime.of(12,34), true, "Патологических изменений не выявлено."),
@@ -24,32 +28,4 @@ public class PatientServiceMock implements PatientService{
             new Patient("Шломенко Александр Иванович", LocalDate.of(1984, Month.JULY, 13), LocalTime.of(10,12), true, "Lob. v. Azygos.")
     );
 
-    private static ArrayList<Patient> patients = new ArrayList<>(firstStage);
-
-    @Override
-    public List<Patient> getAll() {
-        return patients;
-    }
-
-    @Override
-    public Patient getById(Integer id) {
-        for (Patient p : patients)
-            if(Objects.equals(p.getId(), id)) return p;
-        return null;
-    }
-
-    @Override
-    public void delete(Patient patient) {
-        patients.remove(patient);
-    }
-
-    @Override
-    public void create(Patient patient) {
-        patients.add(patient);
-    }
-
-    @Override
-    public void update(Integer id, Patient newT) {
-
-    }
 }

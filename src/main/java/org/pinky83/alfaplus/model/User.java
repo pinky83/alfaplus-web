@@ -1,30 +1,27 @@
 package org.pinky83.alfaplus.model;
 
+import java.util.Date;
+import java.util.Set;
+
 /**
  * Created by Дмитрий on 29.11.2016./
  */
-public class User {
-    private Integer id;
-    private String name;
-    private String password;
-    private String email;
+public class User extends NamedEntity{
+    protected String password;
+    protected String email;
+    protected boolean enabled = true;
+    protected Date registered = new Date();
+    protected Set<Role> roles;
 
     public User() {
     }
 
-    public User(Integer id, String name, String password, String email) {
-        this.id = id;
-        this.name = name;
+    public User(Integer id, String name, String password, String email, boolean enabled, Set<Role> roles) {
+        super(id, name);
         this.password = password;
         this.email = email;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+        this.enabled = enabled;
+        this.roles = roles;
     }
 
     public String getPassword() {
@@ -35,12 +32,16 @@ public class User {
         return email;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Date getRegistered() {
+        return registered;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public void setPassword(String password) {
@@ -49,5 +50,29 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setRegistered(Date registered) {
+        this.registered = registered;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name=" + name +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", registered=" + registered +
+                ", roles=" + roles +
+                '}';
     }
 }

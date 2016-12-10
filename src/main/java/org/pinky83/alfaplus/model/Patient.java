@@ -3,14 +3,10 @@ package org.pinky83.alfaplus.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.pinky83.alfaplus.service.PatientServiceMock.counter;
-
 /**
  * Created by Дмитрий on 29.11.2016./
  */
-public class Patient {
-    private Integer id;
-    private String name;
+public class Patient extends NamedEntity{
     private LocalDate birthDate;
     private LocalTime birthTime;
     private boolean sex;
@@ -19,21 +15,12 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
-        this.id = counter.incrementAndGet();
-        this.name = name;
+    public Patient(Integer id, String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
+        super(id, name);
         this.birthDate = birthDate;
         this.birthTime = birthTime;
         this.sex = sex;
         this.comments = comments;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public LocalDate getBirthDate() {
@@ -52,14 +39,6 @@ public class Patient {
         return comments;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
@@ -74,5 +53,17 @@ public class Patient {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", name=" + name +
+                "birthDate=" + birthDate +
+                ", birthTime=" + birthTime +
+                ", sex=" + sex +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 }

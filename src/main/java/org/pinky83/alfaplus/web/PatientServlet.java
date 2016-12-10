@@ -2,7 +2,7 @@ package org.pinky83.alfaplus.web;
 
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.service.PatientService;
-import org.pinky83.alfaplus.service.PatientServiceMock;
+import org.pinky83.alfaplus.service.PatientServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ import java.time.LocalTime;
  * Created by Дмитрий on 30.11.2016./
  */
 public class PatientServlet extends HttpServlet{
-    private PatientService service = new PatientServiceMock();
+    private PatientService service = new PatientServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

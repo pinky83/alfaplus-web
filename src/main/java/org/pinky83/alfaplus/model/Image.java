@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 /**
  * Created by Дмитрий on 29.11.2016./
  */
-public class Image {
-    private Integer id;
+public class Image extends BaseEntity{
     private Integer seriesId;
     private Integer patientId;
     private Integer studyId;
