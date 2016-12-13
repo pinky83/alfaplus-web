@@ -11,11 +11,13 @@ public interface UserService {
 
     List<User> getAll();
 
-    User getById(int id);
+    User get(int id);
 
-    void delete(User user);
+    User getByEmail(String email);
+
+    void delete(int id);
 
     void create(User user);
 
-    void update(Integer id, User newT);
+    void update(User newT);
 }

@@ -19,11 +19,10 @@ import java.util.stream.Collectors;
  * Created by Дмитрий on 10.12.2016./
  */
 public class MockPatientRepository implements PatientRepository{
-    //TODO need to fix static mock repository and inject it via spring
-    private static AtomicInteger counter = new AtomicInteger(0);
-    public static Map<Integer, Patient> mockRepository = new ConcurrentHashMap<>();
-    private static User testUser = new User();
-    private static Collection<Patient> firstStage = Arrays.asList(
+    private AtomicInteger counter = new AtomicInteger(0);
+    public Map<Integer, Patient> mockRepository = new ConcurrentHashMap<>();
+    private User testUser = new User();
+    private Collection<Patient> firstStage = Arrays.asList(
             new Patient("Масалитин Иван Иванович", LocalDate.of(1983, Month.APRIL, 21), LocalTime.of(12,34), true, "Патологических изменений не выявлено."),
             new Patient("Коваленко Вячеслав Михайлович", LocalDate.of(1983, Month.JANUARY, 18), LocalTime.of(8,15), true, "Сердце асширено влево."),
             new Patient("Песоцкая Мария Николаевна", LocalDate.of(1982, Month.AUGUST, 5), LocalTime.of(15,54), false, "Легочный рисунок усилен."),
