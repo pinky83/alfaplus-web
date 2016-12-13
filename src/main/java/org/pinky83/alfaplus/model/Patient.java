@@ -23,6 +23,10 @@ public class Patient extends NamedEntity{
         this.comments = comments;
     }
 
+    public Patient(String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
+       this(null, name, birthDate, birthTime, sex, comments);
+    }
+
     public LocalDate getBirthDate() {
         return birthDate;
     }

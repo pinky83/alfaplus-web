@@ -7,19 +7,15 @@ import java.util.List;
 /**
  * Created by Дмитрий on 30.11.2016./
  */
-public interface UserService extends GenericService<User>{
-    @Override
+public interface UserService {
+
     List<User> getAll();
 
-    @Override
-    User getById(Integer id);
+    User getById(int id);
 
-    @Override
     void delete(User user);
 
-    @Override
     void create(User user);
 
-    @Override
     void update(Integer id, User newT);
 }

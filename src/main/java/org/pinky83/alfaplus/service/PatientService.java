@@ -2,24 +2,24 @@ package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.Patient;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Дмитрий on 30.11.2016./
  */
 public interface PatientService extends GenericService<Patient> {
     @Override
-    List<Patient> getAll();
+    Collection<Patient> getAll(int userId);
 
     @Override
-    Patient getById(Integer id);
+    Patient getById(int id, int userId);
 
     @Override
-    void delete(Patient patient);
+    void delete(int id, int userId);
 
     @Override
-    void create(Patient patient);
+    void create(Patient patient, int userId);
 
     @Override
-    void update(Integer id, Patient newT);
+    void update(int id, Patient newT, int userId);
 }

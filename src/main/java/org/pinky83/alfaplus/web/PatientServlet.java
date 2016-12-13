@@ -1,5 +1,6 @@
 package org.pinky83.alfaplus.web;
 
+import org.pinky83.alfaplus.LoggedUser;
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.service.PatientService;
 import org.pinky83.alfaplus.service.PatientServiceImpl;
@@ -18,20 +19,22 @@ import java.time.LocalTime;
 public class PatientServlet extends HttpServlet{
     private PatientService service = new PatientServiceImpl();
 
+    LoggedUser loggedUser = new LoggedUser();//user for tests
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String actioon = req.getParameter("action");
 
         if (actioon.equalsIgnoreCase("list_patient")){
-            req.setAttribute("patientList", service.getAll());
+            req.setAttribute("patientList", service.getAll(loggedUser.getId()));
             req.getRequestDispatcher("patientList.jsp").forward(req, resp);
         }
         else if(actioon.equalsIgnoreCase("delete")){
-            Integer id = Integer.parseInt(req.getParameter("id"));
-            service.delete(service.getById(id));
+            int id = Integer.parseInt(req.getParameter("id"));
+            service.delete(id, loggedUser.getId());
 
-            req.setAttribute("patientList", service.getAll());
+            req.setAttribute("patientList", service.getAll(loggedUser.getId()));
             req.getRequestDispatcher("patientList.jsp").forward(req, resp);
         }
         else resp.setStatus(400);
@@ -45,10 +48,10 @@ public class PatientServlet extends HttpServlet{
         String comment = req.getParameter("comment");
         if(!(name.equals("")&&comment.equals(""))) {
             Patient newPatient = new Patient(name, LocalDate.now(), LocalTime.now(), true, comment);
-            service.create(newPatient);
+            service.create(newPatient, loggedUser.getId());
         }
 
-        req.setAttribute("patientList", service.getAll());
+        req.setAttribute("patientList", service.getAll(loggedUser.getId()));
         req.getRequestDispatcher("patientList.jsp").forward(req, resp);
     }
 }

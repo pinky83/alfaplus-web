@@ -3,7 +3,7 @@ package org.pinky83.alfaplus.repository;
 import org.pinky83.alfaplus.model.Patient;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Дмитрий on 10.12.2016.//
@@ -19,8 +19,8 @@ public interface PatientRepository {
     Patient get(int id, int userId);
 
     // ORDERED dateTime// access violation exception for guests
-    List<Patient> getAll(int userId);
+    Collection<Patient> getAll(int userId);
 
     // ORDERED dateTime//access violation exception for guests
-    List<Patient> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+    Collection<Patient> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
 }
