@@ -3,6 +3,7 @@ package org.pinky83.alfaplus.repository.mock;
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.model.User;
 import org.pinky83.alfaplus.repository.PatientRepository;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Дмитрий on 10.12.2016./
  */
+@Repository
 public class MockPatientRepository implements PatientRepository{
     private AtomicInteger counter = new AtomicInteger(0);
     public Map<Integer, Patient> mockRepository = new ConcurrentHashMap<>();

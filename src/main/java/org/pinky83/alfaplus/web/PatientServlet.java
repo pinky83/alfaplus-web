@@ -2,9 +2,13 @@ package org.pinky83.alfaplus.web;
 
 import org.pinky83.alfaplus.LoggedUser;
 import org.pinky83.alfaplus.model.Patient;
-import org.pinky83.alfaplus.service.PatientService;
-import org.pinky83.alfaplus.service.PatientServiceImpl;
+import org.pinky83.alfaplus.model.User;
+import org.pinky83.alfaplus.service.UserService;
+import org.pinky83.alfaplus.web.patient.PatientController;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +21,22 @@ import java.time.LocalTime;
  * Created by Дмитрий on 30.11.2016./
  */
 public class PatientServlet extends HttpServlet{
-    private PatientService service = new PatientServiceImpl();
 
-    LoggedUser loggedUser = new LoggedUser();//user for tests
+    private PatientController controller;
+
+    private UserService userService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        ApplicationContext appCtx =
+                new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        controller = appCtx.getBean(PatientController.class);
+
+        userService = appCtx.getBean(UserService.class);
+    }
+
+   private LoggedUser loggedUser = new LoggedUser();//user for tests
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,14 +44,14 @@ public class PatientServlet extends HttpServlet{
         String actioon = req.getParameter("action");
 
         if (actioon.equalsIgnoreCase("list_patient")){
-            req.setAttribute("patientList", service.getAll(loggedUser.getId()));
+            req.setAttribute("patientList", controller.getAll(loggedUser.getId()));
             req.getRequestDispatcher("patientList.jsp").forward(req, resp);
         }
         else if(actioon.equalsIgnoreCase("delete")){
             int id = Integer.parseInt(req.getParameter("id"));
-            service.delete(id, loggedUser.getId());
+            controller.delete(id, loggedUser.getId());
 
-            req.setAttribute("patientList", service.getAll(loggedUser.getId()));
+            req.setAttribute("patientList", controller.getAll(loggedUser.getId()));
             req.getRequestDispatcher("patientList.jsp").forward(req, resp);
         }
         else resp.setStatus(400);
@@ -44,14 +61,17 @@ public class PatientServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
+        User testUser = userService.getByEmail("kiso4ka2345");//fake user for tests
+        testUser.setId(loggedUser.getId());
+
         String name = req.getParameter("name");
         String comment = req.getParameter("comment");
         if(!(name.equals("")&&comment.equals(""))) {
             Patient newPatient = new Patient(name, LocalDate.now(), LocalTime.now(), true, comment);
-            service.create(newPatient, loggedUser.getId());
+            controller.create(newPatient, testUser);
         }
 
-        req.setAttribute("patientList", service.getAll(loggedUser.getId()));
+        req.setAttribute("patientList", controller.getAll(loggedUser.getId()));
         req.getRequestDispatcher("patientList.jsp").forward(req, resp);
     }
 }

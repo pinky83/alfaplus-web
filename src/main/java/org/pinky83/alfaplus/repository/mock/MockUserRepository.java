@@ -5,6 +5,7 @@ import org.pinky83.alfaplus.model.User;
 import org.pinky83.alfaplus.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Дмитрий on 10.12.2016./
  */
+@Repository
 public class MockUserRepository implements UserRepository{
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);

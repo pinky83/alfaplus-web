@@ -2,6 +2,7 @@ package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.Patient;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -11,6 +12,9 @@ public interface PatientService extends GenericService<Patient> {
     @Override
     Collection<Patient> getAll(int userId);
 
+    Collection<Patient> getFilteredAll(LocalDateTime startTime, LocalDateTime endTime,
+                                       int userId);
+
     @Override
     Patient getById(int id, int userId);
 
@@ -18,8 +22,7 @@ public interface PatientService extends GenericService<Patient> {
     void delete(int id, int userId);
 
     @Override
-    void create(Patient patient, int userId);
+    Patient create(Patient patient, int userId);
 
-    @Override
-    void update(int id, Patient newT, int userId);
+    void update(Patient newT, int userId);
 }
