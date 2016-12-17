@@ -5,7 +5,7 @@ import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.model.User;
 import org.pinky83.alfaplus.service.UserService;
 import org.pinky83.alfaplus.web.patient.PatientController;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletConfig;
@@ -26,17 +26,23 @@ public class PatientServlet extends HttpServlet{
 
     private UserService userService;
 
+    private LoggedUser loggedUser = new LoggedUser();//user for tests
+
+    private ConfigurableApplicationContext appCtx;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        ApplicationContext appCtx =
-                new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         controller = appCtx.getBean(PatientController.class);
-
         userService = appCtx.getBean(UserService.class);
     }
 
-   private LoggedUser loggedUser = new LoggedUser();//user for tests
+    @Override
+    public void destroy() {
+        appCtx.close();
+        super.destroy();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

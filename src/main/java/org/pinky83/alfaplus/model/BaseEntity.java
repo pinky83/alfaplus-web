@@ -1,9 +1,18 @@
 package org.pinky83.alfaplus.model;
 
+import org.springframework.data.domain.Persistable;
+
+import javax.persistence.*;
+
 /**
  * Created by Дмитрий on 10.12.2016.//
  */
-public class BaseEntity {
+@MappedSuperclass
+@Access(AccessType.FIELD)
+public class BaseEntity implements Persistable<Integer> {
+    @Id
+    @GeneratedValue
+    @Access(value = AccessType.PROPERTY)
     protected Integer id;
 
     public BaseEntity() {

@@ -1,21 +1,41 @@
 package org.pinky83.alfaplus.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
  * Created by Дмитрий on 29.11.2016./
  */
+@Entity
+@Table(name = "XPATIENT")
 public class Patient extends NamedEntity{
+
+    @Column(name = "PATIENTBIRTHDATE")
+    @NotEmpty
+    @NotNull
     private LocalDate birthDate;
+
+    @Column(name = "PATIENTBIRTHTIME")
     private LocalTime birthTime;
-    private boolean sex;
+
+    @Column(name = "PATIENTSEXINT")
+    @NotEmpty
+    private int sex;
+
+    @NotNull
+    @Column(name = "PATIENTCOMMENTS")
     private String comments;
 
     public Patient() {
     }
 
-    public Patient(Integer id, String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
+    public Patient(Integer id, String name, LocalDate birthDate, LocalTime birthTime, int sex, String comments) {
         super(id, name);
         this.birthDate = birthDate;
         this.birthTime = birthTime;
@@ -23,7 +43,7 @@ public class Patient extends NamedEntity{
         this.comments = comments;
     }
 
-    public Patient(String name, LocalDate birthDate, LocalTime birthTime, boolean sex, String comments) {
+    public Patient(String name, LocalDate birthDate, LocalTime birthTime, int sex, String comments) {
        this(null, name, birthDate, birthTime, sex, comments);
     }
 
@@ -35,7 +55,7 @@ public class Patient extends NamedEntity{
         return birthTime;
     }
 
-    public boolean isSex() {
+    public int getSex() {
         return sex;
     }
 
@@ -51,7 +71,7 @@ public class Patient extends NamedEntity{
         this.birthTime = birthTime;
     }
 
-    public void setSex(boolean sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
