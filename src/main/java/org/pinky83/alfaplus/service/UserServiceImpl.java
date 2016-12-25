@@ -1,10 +1,9 @@
 package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.User;
-import org.pinky83.alfaplus.repository.mock.MockUserRepository;
+import org.pinky83.alfaplus.mock.MockUserRepository;
 import org.pinky83.alfaplus.util.exception.ExceptionUtil;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +13,8 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService{
-    @Autowired
-    private MockUserRepository userRepository;
+
+    private MockUserRepository userRepository = new MockUserRepository();
 
     @Override
     public List<User> getAll() {

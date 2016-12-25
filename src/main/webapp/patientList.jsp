@@ -22,8 +22,10 @@
 <table align="center">
     <c:forEach items="${requestScope.patientList}" var="item">
       <%--<c:set var="cleanedDateTime" value="${fn:replace(item.getDateTime(), 'T', ' ')}" />--%>
-        <tr style="${item.isSex()? 'color:blue' : 'color:pink'}">
+        <tr style="color: brown">
+            <td style="border: double">${item.getId()}</td>
             <td style="border: double">${item.getBirthDate()}</td>
+            <td style="border: double">${item.getSex()==1? 'Ж' : 'М'}</td>
             <td style="border: double">${item.getName()}</td>
             <td style="border: double">${item.getComments()}</td>
             <td style="border: double"><a rel="editor">Edit</a></td>

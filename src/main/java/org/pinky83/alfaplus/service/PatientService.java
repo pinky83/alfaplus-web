@@ -1,6 +1,7 @@
 package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.Patient;
+import org.pinky83.alfaplus.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -16,13 +17,13 @@ public interface PatientService extends GenericService<Patient> {
                                        int userId);
 
     @Override
-    Patient getById(int id, int userId);
+    Patient getById(int id, int userId) throws NotFoundException;
 
     @Override
-    void delete(int id, int userId);
+    void delete(int id, int userId) throws NotFoundException;
 
     @Override
     Patient create(Patient patient, int userId);
 
-    void update(Patient newT, int userId);
+    void update(Patient newT, int userId) throws NotFoundException;
 }

@@ -2,6 +2,7 @@ package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.repository.PatientRepository;
+import org.pinky83.alfaplus.util.exception.ExceptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,14 @@ import java.util.*;
  * Created by Дмитрий on 30.11.2016./
  */
 @Service
-public class PatientServiceImpl implements PatientService{
+public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PatientRepository repository;
+
     @Override
-    public Collection<Patient> getAll(int userId) {return repository.getAll(userId);
+    public Collection<Patient> getAll(int userId) {
+        return repository.getAll(userId);
     }
 
     @Override
@@ -27,9 +30,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient getById(int id, int userId) {
-        for (Patient p : repository.getAll(userId))
-            if(Objects.equals(p.getId(), id)) return p;
-        return null;
+        return ExceptionUtil.checkNotFoundWithId(repository.getById(id, userId), id);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient create(Patient patient, int userId) {
-      return   repository.save(patient, userId);
+        return repository.save(patient, userId);
     }
 
     @Override

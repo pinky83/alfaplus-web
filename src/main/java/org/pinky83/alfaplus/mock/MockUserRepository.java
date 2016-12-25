@@ -1,4 +1,4 @@
-package org.pinky83.alfaplus.repository.mock;
+package org.pinky83.alfaplus.mock;
 
 import org.pinky83.alfaplus.model.Role;
 import org.pinky83.alfaplus.model.User;

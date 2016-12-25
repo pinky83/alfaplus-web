@@ -73,7 +73,7 @@ public class PatientServlet extends HttpServlet{
         String name = req.getParameter("name");
         String comment = req.getParameter("comment");
         if(!(name.equals("")&&comment.equals(""))) {
-            Patient newPatient = new Patient(name, LocalDate.now(), LocalTime.now(), true, comment);
+            Patient newPatient = new Patient(name, LocalDate.now(), LocalTime.now(), 1, comment);
             controller.create(newPatient, testUser);
         }
 

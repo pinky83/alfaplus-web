@@ -10,9 +10,12 @@ import javax.persistence.*;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public class BaseEntity implements Persistable<Integer> {
+    //TODO need to refactor models  - without named superclasses (because primary key
+    // differens on all tables)
     @Id
     @GeneratedValue
     @Access(value = AccessType.PROPERTY)
+    @Column(name = "AUTOPATIENTID")
     protected Integer id;
 
     public BaseEntity() {

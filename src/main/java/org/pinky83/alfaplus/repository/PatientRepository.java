@@ -18,6 +18,8 @@ public interface PatientRepository {
     // null if patient data - name, sex, birth not correspond to  userId - for guests
     Patient get(int id, int userId);
 
+    Patient getById(int id, int userId);
+
     // ORDERED dateTime// access violation exception for guests
     Collection<Patient> getAll(int userId);
 

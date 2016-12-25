@@ -8,7 +8,6 @@ import java.util.Set;
  * Created by Дмитрий on 29.11.2016./
  */
 public class User extends NamedEntity{
-    //TODO need to fix constructor fields order - wrong email field when saving
     protected String password;
     protected String email;
     protected boolean enabled = true;
@@ -18,7 +17,7 @@ public class User extends NamedEntity{
     public User() {
     }
 
-    public User(Integer id, String name, String password, String email, boolean enabled, Set<Role> roles) {
+    public User(Integer id, String name, String email, String password,  boolean enabled, Set<Role> roles) {
         super(id, name);
         this.password = password;
         this.email = email;
