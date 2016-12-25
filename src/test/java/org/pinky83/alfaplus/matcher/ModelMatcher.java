@@ -56,6 +56,10 @@ public class ModelMatcher<T> {
         Assert.assertEquals(wrap(expected), wrap(actual));
     }
 
+    public void assertNotEquals(T expected, T actual) {
+        Assert.assertNotEquals(wrap(expected), wrap(actual));
+    }
+
     public void assertCollectionEquals(Collection<T> expected, Collection<T> actual) {
         Assert.assertEquals(wrap(expected), wrap(actual));
     }

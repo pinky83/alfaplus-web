@@ -30,7 +30,7 @@ public class PatientTestData {
     public static final List<Patient> PATIENTS = Arrays.asList(PATIENT7, PATIENT6, PATIENT5, PATIENT4, PATIENT3, PATIENT2, PATIENT1);
 
     public static Patient getCreated() {
-        return new Patient("ТЕСТОВЫЙ ПАЦИЕНТ", LocalDate.of(1964, Month.JANUARY, 1), LocalTime.of(0,0), 0, "тестовый адрес");
+        return new Patient("test patient01", LocalDate.of(1964, Month.JANUARY, 1), LocalTime.of(0,0), 0, "тестовый адрес");
     }
 
     public static Patient getUpdated() {

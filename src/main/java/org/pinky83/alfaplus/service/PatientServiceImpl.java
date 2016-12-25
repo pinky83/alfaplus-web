@@ -14,7 +14,6 @@ import java.util.*;
  */
 @Service
 public class PatientServiceImpl implements PatientService {
-
     @Autowired
     private PatientRepository repository;
 
@@ -35,7 +34,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delete(int id, int userId) {
-        repository.delete(id, userId);
+        ExceptionUtil.checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
     @Override

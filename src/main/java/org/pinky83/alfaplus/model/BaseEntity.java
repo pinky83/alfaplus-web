@@ -13,7 +13,8 @@ public class BaseEntity implements Persistable<Integer> {
     //TODO need to refactor models  - without named superclasses (because primary key
     // differens on all tables)
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "entity1Seq", sequenceName="AUTOPATIENTIDGEN", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq")
     @Access(value = AccessType.PROPERTY)
     @Column(name = "AUTOPATIENTID")
     protected Integer id;

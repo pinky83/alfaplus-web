@@ -13,18 +13,17 @@ import java.util.Collection;
  */
 @Repository
 public class DataJpaPatientRepository implements PatientRepository{
+    //TODO all methods need to verify userId
     @Autowired
     private CrudPatientRepository repository;
 
     @Override
     public Patient save(Patient patient, int userId) {
-        return null;
+        return repository.save(patient);
     }
 
     @Override
-    public boolean delete(int id, int userId) {
-        return false;
-    }
+    public boolean delete(int id, int userId) {return repository.delete(id)!=0;}
 
     @Override
     public Patient get(int id, int userId) {
@@ -32,7 +31,7 @@ public class DataJpaPatientRepository implements PatientRepository{
     }
 
     @Override
-    //TODO need to verify userId
+
     public Patient getById(int id, int userId) {
         return repository.getById(id);
     }
