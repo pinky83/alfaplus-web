@@ -6,7 +6,7 @@ import org.pinky83.alfaplus.util.exception.ExceptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -23,13 +23,18 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Collection<Patient> getFilteredAll(LocalDateTime startTime, LocalDateTime endTime, int userId) {
+    public Collection<Patient> getFilteredAll(LocalDate startTime, LocalDate endTime, int userId) {
         return repository.getBetween(startTime, endTime, userId);
     }
 
     @Override
     public Patient getById(int id, int userId) {
         return ExceptionUtil.checkNotFoundWithId(repository.getById(id, userId), id);
+    }
+
+    @Override
+    public Collection<Patient> getAllByName(String name, int userId) {
+        return repository.getAllByName(name, userId);
     }
 
     @Override

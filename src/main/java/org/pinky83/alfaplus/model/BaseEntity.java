@@ -10,8 +10,7 @@ import javax.persistence.*;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public class BaseEntity implements Persistable<Integer> {
-    //TODO need to refactor models  - without named superclasses (because primary key
-    // differens on all tables)
+    // different on all tables)
     @Id
     @SequenceGenerator(name = "entity1Seq", sequenceName="AUTOPATIENTIDGEN", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq")

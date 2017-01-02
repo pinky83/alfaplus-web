@@ -48,6 +48,11 @@ public class MockPatientRepository implements PatientRepository{
     }
 
     @Override
+    public Collection<Patient> getAllByName(String name, int userId) {
+        return null;
+    }
+
+    @Override
     public boolean delete(int id, int userId) {
         if(mockRepository.containsKey(id)) {
             if (userId == testUser.getId()) {
@@ -79,11 +84,11 @@ public class MockPatientRepository implements PatientRepository{
     }
 
     @Override
-    public Collection<Patient> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
+    public Collection<Patient> getBetween(LocalDate startDate, LocalDate endDate, int userId) {
         return userId == testUser.getId() ?
                 mockRepository.values().stream().filter(patient -> patient.getBirthDate().isBefore(
-                endDate.plusDays(1).toLocalDate())).filter(patient -> patient.getBirthDate()
-                .isAfter(startDate.minusDays(1).toLocalDate())).collect(Collectors.toList())
+                endDate.plusDays(1))).filter(patient -> patient.getBirthDate()
+                .isAfter(startDate.minusDays(1))).collect(Collectors.toList())
                 :
                 null;
     }

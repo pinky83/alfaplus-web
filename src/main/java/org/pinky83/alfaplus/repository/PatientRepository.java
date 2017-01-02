@@ -2,6 +2,7 @@ package org.pinky83.alfaplus.repository;
 
 import org.pinky83.alfaplus.model.Patient;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -23,6 +24,8 @@ public interface PatientRepository {
     // ORDERED dateTime// access violation exception for guests
     Collection<Patient> getAll(int userId);
 
+    Collection<Patient> getAllByName(String name, int userId);
+
     // ORDERED dateTime//access violation exception for guests
-    Collection<Patient> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+    Collection<Patient> getBetween(LocalDate startDate, LocalDate endDate, int userId);
 }

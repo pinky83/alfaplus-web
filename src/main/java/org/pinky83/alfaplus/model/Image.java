@@ -1,46 +1,66 @@
 package org.pinky83.alfaplus.model;
 
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * Created by Дмитрий on 29.11.2016./
  */
-public class Image extends BaseEntity{
-    private Integer seriesId;
-    private Integer patientId;
-    private Integer studyId;
+@Entity
+@Table(name = "XIMAGE")
+public class Image extends BaseEntity {
+    @Id
+    @SequenceGenerator(name = "entity1Seq2", sequenceName = "AUTOIMAGEIDGEN", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq2")
+    @Access(value = AccessType.PROPERTY)
+    @Column(name = "AUTOIMAGEID")
+    private Integer id;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "SERIES_NO")
+    private Series series;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "PATIENT_NO")
+    private Patient patient;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "STUDY_NO")
+    private Study study;
+
+    @Column(name = "IMAGE_DATE")
     private LocalDateTime imageDate;
+
+    @Column(name = "IMAGE_COMMENTS")
     private String description; //IMAGE_COMMENTS
+
+    @Column(name = "IMAGE_FILE_NAME")
     private String fileName;
 
     public Image() {
     }
 
-    public Image(Integer id, Integer seriesId, Integer patientId, Integer studyId, LocalDateTime imageDate, String description, String fileName) {
-        this.id = id;
-        this.seriesId = seriesId;
-        this.patientId = patientId;
-        this.studyId = studyId;
+    public Image(Integer id, Series series, Patient patient, Study study, LocalDateTime imageDate, String description, String fileName) {
+        super(id);
+        this.series = series;
+        this.patient = patient;
+        this.study = study;
         this.imageDate = imageDate;
         this.description = description;
         this.fileName = fileName;
     }
 
-    public Integer getId() {
-        return id;
+    public Series getSeries() {
+        return series;
     }
 
-    public Integer getSeriesId() {
-        return seriesId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public Integer getPatientId() {
-        return patientId;
-    }
-
-    public Integer getStudyId() {
-        return studyId;
+    public Study getStudy() {
+        return study;
     }
 
     public LocalDateTime getImageDate() {
@@ -55,20 +75,16 @@ public class Image extends BaseEntity{
         return fileName;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
-    public void setSeriesId(Integer seriesId) {
-        this.seriesId = seriesId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
-    }
-
-    public void setStudyId(Integer studyId) {
-        this.studyId = studyId;
+    public void setStudy(Study study) {
+        this.study = study;
     }
 
     public void setImageDate(LocalDateTime imageDate) {

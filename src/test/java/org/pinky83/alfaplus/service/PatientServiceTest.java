@@ -1,60 +1,80 @@
 package org.pinky83.alfaplus.service;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Collection;
 
+import static org.pinky83.alfaplus.AuthorizedUser.ADMIN_ID;
+import static org.pinky83.alfaplus.AuthorizedUser.DOCTOR_ID;
+import static org.pinky83.alfaplus.AuthorizedUser.GUEST_ID;
 import static org.pinky83.alfaplus.PatientTestData.*;
-import static org.pinky83.alfaplus.UserTestData.DOCTOR_ID;
 import static org.pinky83.alfaplus.PatientTestData.MATCHER;
 
 /**
  * Created by Дмитрий on 23.12.2016.
  *
  */
-public class PatientServiceTest extends AbstractServiceTest{
+public class PatientServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected PatientService service;
 
     @Test
     public void testGet() throws Exception {
-        Patient actual = service.getById(PATIENT7.getId(), DOCTOR_ID);
+        Patient actual = service.getById(PATIENT7.getId(), GUEST_ID);
         MATCHER.assertEquals(PATIENT7, actual);
     }
 
     @Test
     public void testGetNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.getById(LAST_PATIENT_ID+1, DOCTOR_ID);
+        service.getById(LAST_PATIENT_ID + 1, DOCTOR_ID);
     }
 
     @Test
     public void testDelete() throws Exception {
-        service.delete(PATIENT3.getId(), DOCTOR_ID);
+        service.delete(PATIENT5.getId(), ADMIN_ID);
         thrown.expect(NotFoundException.class);
-        service.getById(PATIENT3.getId(), DOCTOR_ID);
+        service.getById(PATIENT5.getId(), ADMIN_ID);
     }
 
     @Test
     public void testDeleteNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.delete(LAST_PATIENT_ID+10, DOCTOR_ID);
+        service.delete(LAST_PATIENT_ID + 10, DOCTOR_ID);
     }
 
     @Test
     public void testSave() throws Exception {
-        Patient created = getCreated();
-        service.create(created, DOCTOR_ID);
-        List<Patient> full_pack = service.getAll(DOCTOR_ID).stream().collect(Collectors.toList());
-        Collections.reverse(full_pack);
-        Patient actual = full_pack.stream().findFirst().get();
-        Assert.assertEquals(created.getName(), actual.getName());
+        Patient created = service.create(getCreated(), DOCTOR_ID);
+        Patient actual = service.getById(created.getId(), DOCTOR_ID);
+        MATCHER.assertEquals(created, actual);
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        Patient updated = getUpdated();
+        service.update(getUpdated(), DOCTOR_ID);
+        MATCHER.assertEquals(updated, service.getById(FIRST_PATIENT_ID+1, DOCTOR_ID));
+    }
+
+    @Test
+    public void testNotFoundUpdate() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + (FIRST_PATIENT_ID-2));
+        Patient expected = service.getById(FIRST_PATIENT_ID-2, DOCTOR_ID);
+        service.update(expected, DOCTOR_ID);
+    }
+
+    @Test
+    public void testGetBetween() throws Exception {
+        Collection<Patient> tested =  service.getFilteredAll(LocalDate.of(1916, Month.JANUARY, 1), LocalDate.of(1917, Month.JANUARY, 1), DOCTOR_ID);
+        tested.stream().forEach(patient -> System.out.println(patient.toString()));
+        System.out.println("Всего - " + tested.size());
     }
 }

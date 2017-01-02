@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 
@@ -15,9 +16,7 @@ import java.util.Collection;
  */
 @Transactional(readOnly = true)
 public interface CrudPatientRepository extends JpaRepository<Patient, Integer> {
-//TODO Need to complete data-jpa repositories
 
-    @Transactional
     @Override
     Patient save(Patient patient);
 
@@ -26,13 +25,12 @@ public interface CrudPatientRepository extends JpaRepository<Patient, Integer> {
     @Query("DELETE FROM Patient p WHERE p.id=:id")
     int delete(@Param("id") int id);
 
-    //Patient get(int id, int userId);
-    @Query("SELECT p FROM Patient p WHERE p.name=:name ORDER BY p.birthDate DESC")
-    Collection<Patient> getAllByName(@Param("name") String name);
+    Collection<Patient> findByNameContaining(@Param("name") String name);
+
     @Query("SELECT p FROM Patient p")
     Collection<Patient> getAll();
 
     Patient getById(int id);
 
-    //Collection<Patient> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+    Collection<Patient> birthDateBetween(LocalDate startDate, LocalDate endDate);
 }

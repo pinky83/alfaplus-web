@@ -2,12 +2,11 @@ package org.pinky83.alfaplus.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * Created by Дмитрий on 29.11.2016./
@@ -31,6 +30,9 @@ public class Patient extends NamedEntity{
     @NotNull
     @Column(name = "PATIENTCOMMENTS")
     private String comments;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "patient")
+    private List<Image> images;
 
     public Patient() {
     }
@@ -77,6 +79,10 @@ public class Patient extends NamedEntity{
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public List<Image> getImages() {
+        return images;
     }
 
     @Override

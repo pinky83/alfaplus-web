@@ -1,9 +1,10 @@
 package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.Patient;
+import org.pinky83.alfaplus.util.exception.AccessViolationException;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collection;
 
 /**
@@ -11,19 +12,21 @@ import java.util.Collection;
  */
 public interface PatientService extends GenericService<Patient> {
     @Override
-    Collection<Patient> getAll(int userId);
+    Collection<Patient> getAll(int userId) throws AccessViolationException;
 
-    Collection<Patient> getFilteredAll(LocalDateTime startTime, LocalDateTime endTime,
-                                       int userId);
-
-    @Override
-    Patient getById(int id, int userId) throws NotFoundException;
+    Collection<Patient> getFilteredAll(LocalDate startTime, LocalDate endTime,
+                                       int userId) throws AccessViolationException;
 
     @Override
-    void delete(int id, int userId) throws NotFoundException;
+    Patient getById(int id, int userId) throws NotFoundException, AccessViolationException;
+
+    Collection<Patient> getAllByName(String name, int userId) throws AccessViolationException;
 
     @Override
-    Patient create(Patient patient, int userId);
+    void delete(int id, int userId) throws NotFoundException, AccessViolationException;
 
-    void update(Patient newT, int userId) throws NotFoundException;
+    @Override
+    Patient create(Patient patient, int userId) throws AccessViolationException;
+
+    void update(Patient newT, int userId) throws NotFoundException, AccessViolationException;
 }

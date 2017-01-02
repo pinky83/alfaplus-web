@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Collection;
 
 /**
@@ -41,11 +39,9 @@ public class PatientController {
         return service.getAll(userId);
     }
 
-    public Collection<Patient> getFilteredAll(int userId, LocalDate startDate,
-                                              LocalTime startTime, LocalDate endDate,
-                                              LocalTime endTime) {
-        return service.getFilteredAll(LocalDateTime.of(startDate, startTime),
-                LocalDateTime.of(endDate, endTime), userId);
+    public Collection<Patient> getFilteredAll(int userId, LocalDate startDate, LocalDate endDate) {
+        return service.getFilteredAll(startDate, endDate, userId);
+
     }
 
     public void update(Patient patient, User user) {
