@@ -8,6 +8,9 @@ import java.util.Set;
  * Created by Дмитрий on 29.11.2016./
  */
 public class User extends NamedEntity{
+
+    private Integer id;
+
     protected String password;
     protected String email;
     protected boolean enabled = true;

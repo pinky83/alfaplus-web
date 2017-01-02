@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "XSTUDY")
+@Access(AccessType.FIELD)
 public class Study extends BaseEntity{
     @Id
     @SequenceGenerator(name = "entity1Seq3", sequenceName="AUTOSTUDYIDGEN", allocationSize=1)
@@ -69,5 +70,15 @@ public class Study extends BaseEntity{
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Study{" +
+                "id=" + id +
+                ", studyDate=" + studyDate +
+                ", age=" + age +
+                ", diagnoses='" + diagnoses + '\'' +
+                '}';
     }
 }

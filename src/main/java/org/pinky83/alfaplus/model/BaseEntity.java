@@ -7,16 +7,12 @@ import javax.persistence.*;
 /**
  * Created by Дмитрий on 10.12.2016.//
  */
-@MappedSuperclass
+
 @Access(AccessType.FIELD)
 public class BaseEntity implements Persistable<Integer> {
     // different on all tables)
-    @Id
-    @SequenceGenerator(name = "entity1Seq", sequenceName="AUTOPATIENTIDGEN", allocationSize=1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq")
-    @Access(value = AccessType.PROPERTY)
-    @Column(name = "AUTOPATIENTID")
-    protected Integer id;
+
+    private Integer id;
 
     public BaseEntity() {
     }

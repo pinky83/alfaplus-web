@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "XIMAGE")
+@Access(AccessType.FIELD)
 public class Image extends BaseEntity {
     @Id
     @SequenceGenerator(name = "entity1Seq2", sequenceName = "AUTOIMAGEIDGEN", allocationSize = 1)
@@ -17,15 +18,15 @@ public class Image extends BaseEntity {
     @Column(name = "AUTOIMAGEID")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "SERIES_NO")
     private Series series;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "PATIENT_NO")
     private Patient patient;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "STUDY_NO")
     private Study study;
 
@@ -97,5 +98,17 @@ public class Image extends BaseEntity {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                ", series=" + series +
+                ", study=" + study +
+                ", imageDate=" + imageDate +
+                ", description='" + description + '\'' +
+                ", fileName='" + fileName + '\'' +
+                '}';
     }
 }

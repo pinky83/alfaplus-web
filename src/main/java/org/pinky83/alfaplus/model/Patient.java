@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "XPATIENT")
+@Access(AccessType.FIELD)
 public class Patient extends NamedEntity{
+    @Id
+    @SequenceGenerator(name = "entity1Seq", sequenceName="AUTOPATIENTIDGEN", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq")
+    @Access(value = AccessType.PROPERTY)
+    @Column(name = "AUTOPATIENTID")
+    private int id;
 
     @Column(name = "PATIENTBIRTHDATE")
     @NotEmpty
@@ -31,8 +39,8 @@ public class Patient extends NamedEntity{
     @Column(name = "PATIENTCOMMENTS")
     private String comments;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "patient")
-    private List<Image> images;
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "patient")
+    private List<Image> images = new ArrayList<>();
 
     public Patient() {
     }

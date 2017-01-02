@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "XSERIES")
+@Access(AccessType.FIELD)
 public class Series extends BaseEntity{
     @Id
     @SequenceGenerator(name = "entity1Seq1", sequenceName="AUTOSERIESIDGEN", allocationSize=1)
@@ -82,5 +83,16 @@ public class Series extends BaseEntity{
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Series{" +
+                "id=" + id +
+                ", seriesDate=" + seriesDate +
+                ", operator='" + operator + '\'' +
+                ", bodyPart='" + bodyPart + '\'' +
+                ", position='" + position + '\'' +
+                '}';
     }
 }

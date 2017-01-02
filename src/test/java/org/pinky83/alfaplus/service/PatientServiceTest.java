@@ -1,6 +1,7 @@
 package org.pinky83.alfaplus.service;
 
 import org.junit.Test;
+import org.pinky83.alfaplus.model.Image;
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,21 +47,21 @@ public class PatientServiceTest extends AbstractServiceTest {
     @Test
     public void testDeleteNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.delete(LAST_PATIENT_ID + 10, DOCTOR_ID);
+        service.delete(LAST_PATIENT_ID + 10, ADMIN_ID);
     }
 
     @Test
     public void testSave() throws Exception {
-        Patient created = service.create(getCreated(), DOCTOR_ID);
-        Patient actual = service.getById(created.getId(), DOCTOR_ID);
+        Patient created = service.create(getCreated(), ADMIN_ID);
+        Patient actual = service.getById(created.getId(), ADMIN_ID);
         MATCHER.assertEquals(created, actual);
     }
 
     @Test
     public void testUpdate() throws Exception {
         Patient updated = getUpdated();
-        service.update(getUpdated(), DOCTOR_ID);
-        MATCHER.assertEquals(updated, service.getById(FIRST_PATIENT_ID+1, DOCTOR_ID));
+        service.update(getUpdated(), ADMIN_ID);
+        MATCHER.assertEquals(updated, service.getById(FIRST_PATIENT_ID+1, ADMIN_ID));
     }
 
     @Test
@@ -73,8 +74,14 @@ public class PatientServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetBetween() throws Exception {
-        Collection<Patient> tested =  service.getFilteredAll(LocalDate.of(1916, Month.JANUARY, 1), LocalDate.of(1917, Month.JANUARY, 1), DOCTOR_ID);
-        tested.stream().forEach(patient -> System.out.println(patient.toString()));
+        Collection<Patient> tested =  service.getFilteredAll(LocalDate.of(1916, Month.JANUARY, 1), LocalDate.of(1919, Month.JANUARY, 1), DOCTOR_ID);
+        tested.stream().forEach(patient -> {
+            System.out.println(patient.toString());
+            for (Image image: patient.getImages()
+                 ) {
+                System.out.println("    " + image.toString());
+            }
+        });
         System.out.println("Всего - " + tested.size());
     }
 }
