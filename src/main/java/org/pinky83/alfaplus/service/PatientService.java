@@ -14,11 +14,15 @@ public interface PatientService extends GenericService<Patient> {
     @Override
     Collection<Patient> getAll(int userId) throws AccessViolationException;
 
+    Collection<Patient> getAllWithImages(Collection<Patient> source, int userId) throws AccessViolationException;
+
     Collection<Patient> getFilteredAll(LocalDate startTime, LocalDate endTime,
                                        int userId) throws AccessViolationException;
 
     @Override
     Patient getById(int id, int userId) throws NotFoundException, AccessViolationException;
+
+    Patient getByIdWithImages(int id, int userId) throws NotFoundException, AccessViolationException;
 
     Collection<Patient> getAllByName(String name, int userId) throws AccessViolationException;
 

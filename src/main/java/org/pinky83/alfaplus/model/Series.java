@@ -14,7 +14,6 @@ public class Series extends BaseEntity{
     @Id
     @SequenceGenerator(name = "entity1Seq1", sequenceName="AUTOSERIESIDGEN", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq1")
-    @Access(value = AccessType.PROPERTY)
     @Column(name = "AUTOSERIESID")
     private Integer id;
 
@@ -30,7 +29,7 @@ public class Series extends BaseEntity{
     @Column(name = "VIEW_POSITION")
     private String position;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "series")
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "series")
     private Image image;
 
     public Series() {

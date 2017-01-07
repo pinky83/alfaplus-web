@@ -12,8 +12,8 @@
     </appender>
 
     <!--<logger name="org.springframework.jdbc" level="debug"/>-->
-    <logger name="org.pinky83.alfaplus" level="debug"/>
-
+    <logger name="org.pinky83.alfaplus.service" level="info"/>
+    <!--<logger name="org.hibernate" level="warn"/>-->
     <root level="WARN">
         <appender-ref ref="console"/>
     </root>

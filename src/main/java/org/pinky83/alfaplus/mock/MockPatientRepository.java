@@ -53,6 +53,16 @@ public class MockPatientRepository implements PatientRepository{
     }
 
     @Override
+    public Patient getByIdWithImages(int id, int userId) {
+        return null;
+    }
+
+    @Override
+    public Collection<Patient> getAllWithImages(Collection<Patient> source, int userId) {
+        return null;
+    }
+
+    @Override
     public boolean delete(int id, int userId) {
         if(mockRepository.containsKey(id)) {
             if (userId == testUser.getId()) {

@@ -14,11 +14,10 @@ public class Image extends BaseEntity {
     @Id
     @SequenceGenerator(name = "entity1Seq2", sequenceName = "AUTOIMAGEIDGEN", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq2")
-    @Access(value = AccessType.PROPERTY)
     @Column(name = "AUTOIMAGEID")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "SERIES_NO")
     private Series series;
 
@@ -26,7 +25,7 @@ public class Image extends BaseEntity {
     @JoinColumn(name = "PATIENT_NO")
     private Patient patient;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "STUDY_NO")
     private Study study;
 
@@ -104,8 +103,6 @@ public class Image extends BaseEntity {
     public String toString() {
         return "Image{" +
                 "id=" + id +
-                ", series=" + series +
-                ", study=" + study +
                 ", imageDate=" + imageDate +
                 ", description='" + description + '\'' +
                 ", fileName='" + fileName + '\'' +

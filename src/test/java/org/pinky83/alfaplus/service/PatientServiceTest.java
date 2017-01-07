@@ -38,10 +38,20 @@ public class PatientServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void testGetWithImages() throws Exception {
+        Patient patient = service.getByIdWithImages(PATIENT1.getId(), DOCTOR_ID);
+        System.out.println(patient.toString());
+        for (Image image: patient.getImages()
+                ) {
+            System.out.println("    " + image.toString());
+        }
+    }
+
+    @Test
     public void testDelete() throws Exception {
-        service.delete(PATIENT5.getId(), ADMIN_ID);
+        service.delete(PATIENT6.getId(), ADMIN_ID);
         thrown.expect(NotFoundException.class);
-        service.getById(PATIENT5.getId(), ADMIN_ID);
+        service.getById(PATIENT6.getId(), ADMIN_ID);
     }
 
     @Test
@@ -75,10 +85,25 @@ public class PatientServiceTest extends AbstractServiceTest {
     @Test
     public void testGetBetween() throws Exception {
         Collection<Patient> tested =  service.getFilteredAll(LocalDate.of(1916, Month.JANUARY, 1), LocalDate.of(1919, Month.JANUARY, 1), DOCTOR_ID);
-        tested.stream().forEach(patient -> {
+        Collection<Patient> dest = service.getAllWithImages(tested, DOCTOR_ID);
+        dest.stream().forEach(patient -> {
             System.out.println(patient.toString());
             for (Image image: patient.getImages()
                  ) {
+                System.out.println("    " + image.toString());
+            }
+        });
+        System.out.println("Всего - " + tested.size());
+    }
+
+    @Test
+    public void testGetByName() throws Exception {
+        Collection<Patient> tested = service.getAllByName("Яковенко Дмитро", DOCTOR_ID);
+        Collection<Patient> dest = service.getAllWithImages(tested, DOCTOR_ID);
+        dest.stream().forEach(patient -> {
+            System.out.println(patient.toString());
+            for (Image image: patient.getImages()
+                    ) {
                 System.out.println("    " + image.toString());
             }
         });

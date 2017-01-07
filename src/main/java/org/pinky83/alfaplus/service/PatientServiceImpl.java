@@ -2,7 +2,9 @@ package org.pinky83.alfaplus.service;
 
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.repository.PatientRepository;
+import org.pinky83.alfaplus.util.exception.AccessViolationException;
 import org.pinky83.alfaplus.util.exception.ExceptionUtil;
+import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public Collection<Patient> getAllWithImages(Collection<Patient> source, int userId) throws AccessViolationException {
+        return repository.getAllWithImages(source, userId);
+    }
+
+    @Override
     public Collection<Patient> getFilteredAll(LocalDate startTime, LocalDate endTime, int userId) {
         return repository.getBetween(startTime, endTime, userId);
     }
@@ -30,6 +37,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient getById(int id, int userId) {
         return ExceptionUtil.checkNotFoundWithId(repository.getById(id, userId), id);
+    }
+
+    @Override
+    public Patient getByIdWithImages(int id, int userId) throws NotFoundException, AccessViolationException {
+        return ExceptionUtil.checkNotFoundWithId(repository.getByIdWithImages(id, userId), id);
     }
 
     @Override

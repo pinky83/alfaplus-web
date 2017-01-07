@@ -13,7 +13,6 @@ public class Study extends BaseEntity{
     @Id
     @SequenceGenerator(name = "entity1Seq3", sequenceName="AUTOSTUDYIDGEN", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq3")
-    @Access(value = AccessType.PROPERTY)
     @Column(name = "AUTOSTUDYID")
     private Integer id;
 
@@ -21,12 +20,12 @@ public class Study extends BaseEntity{
     private LocalDateTime studyDate;
 
     @Column(name = "PATIENT_AGE")
-    private int age;
+    private Integer age;
 
     @Column(name = "ADDMITTING_DIAGNOSES")
     private String diagnoses;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "study")
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "study")
     private Image image;
 
     public Study() {

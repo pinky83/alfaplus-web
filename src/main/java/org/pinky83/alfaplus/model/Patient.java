@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ public class Patient extends NamedEntity{
     @Id
     @SequenceGenerator(name = "entity1Seq", sequenceName="AUTOPATIENTIDGEN", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq")
-    @Access(value = AccessType.PROPERTY)
     @Column(name = "AUTOPATIENTID")
     private int id;
 
@@ -39,14 +37,15 @@ public class Patient extends NamedEntity{
     @Column(name = "PATIENTCOMMENTS")
     private String comments;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "patient")
-    private List<Image> images = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "patient")
+    private List<Image> images;
 
     public Patient() {
     }
 
     public Patient(Integer id, String name, LocalDate birthDate, LocalTime birthTime, int sex, String comments) {
         super(id, name);
+        if(super.getId()!=null)this.id = super.getId();
         this.birthDate = birthDate;
         this.birthTime = birthTime;
         this.sex = sex;
@@ -55,6 +54,11 @@ public class Patient extends NamedEntity{
 
     public Patient(String name, LocalDate birthDate, LocalTime birthTime, int sex, String comments) {
        this(null, name, birthDate, birthTime, sex, comments);
+    }
+
+    @Override
+    public Integer getId() {
+        return this.id;
     }
 
     public LocalDate getBirthDate() {

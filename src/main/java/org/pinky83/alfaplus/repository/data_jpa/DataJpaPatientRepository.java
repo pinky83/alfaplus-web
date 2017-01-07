@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.pinky83.alfaplus.AuthorizedUser.ADMIN_ID;
 import static org.pinky83.alfaplus.AuthorizedUser.DOCTOR_ID;
@@ -50,9 +52,26 @@ public class DataJpaPatientRepository implements PatientRepository{
     }
 
     @Override
+    public Patient getByIdWithImages(int id, int userId) {
+        ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID, GUEST_ID);
+        return repository.getByIdWithImages(id);
+    }
+
+    @Override
     public Collection<Patient> getAll(int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
         return repository.getAll();
+    }
+
+    @Override
+    @Transactional
+    public Collection<Patient> getAllWithImages(Collection<Patient> source, int userId) {
+        ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
+        List<Patient> dest = new ArrayList<>();
+       source.stream().forEach(patient -> {
+           dest.add(repository.getByIdWithImages(patient.getId()));
+       });
+        return dest;
     }
 
     public Collection<Patient> getAllByName(String name, int userId) {

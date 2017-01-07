@@ -20,8 +20,8 @@ public interface CrudPatientRepository extends JpaRepository<Patient, Integer> {
     @Override
     Patient save(Patient patient);
 
-    @Modifying
     @Transactional
+    @Modifying
     @Query("DELETE FROM Patient p WHERE p.id=:id")
     int delete(@Param("id") int id);
 
@@ -31,6 +31,9 @@ public interface CrudPatientRepository extends JpaRepository<Patient, Integer> {
     Collection<Patient> getAll();
 
     Patient getById(int id);
+
+    @Query("SELECT p FROM Patient p LEFT JOIN FETCH p.images WHERE  p.id = ?1")
+    Patient getByIdWithImages(int id);
 
     Collection<Patient> birthDateBetween(LocalDate startDate, LocalDate endDate);
 }
