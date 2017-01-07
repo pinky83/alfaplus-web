@@ -22,7 +22,6 @@ import static org.pinky83.alfaplus.AuthorizedUser.GUEST_ID;
  */
 @Repository
 public class DataJpaImageRepository implements ImageRepository{
-    //TODO need to finish before commit
     @Autowired
     private CrudImageRepository repository;
 

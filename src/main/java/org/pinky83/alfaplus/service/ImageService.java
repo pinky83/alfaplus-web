@@ -14,7 +14,6 @@ import java.util.List;
  *
  */
 public interface ImageService extends GenericService<Image>{
-    //TODO need to finish before commit
     @Override
     List<Image> getAll(int userId) throws AccessViolationException;
 

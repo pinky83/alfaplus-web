@@ -12,7 +12,6 @@ import java.util.List;
  *
  */
 public interface ImageRepository {
-    //TODO need to finish before commit
     // null if updated patient do not belong to userId
     Image save(Image image, int userId);
 

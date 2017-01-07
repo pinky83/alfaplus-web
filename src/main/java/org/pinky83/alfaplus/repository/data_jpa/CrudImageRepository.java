@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Transactional(readOnly = true)
 public interface CrudImageRepository extends JpaRepository<Image, Integer> {
-    //TODO need to finish before commit
 
     Image getById(int id);
 
