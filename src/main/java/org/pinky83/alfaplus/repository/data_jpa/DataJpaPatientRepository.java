@@ -1,7 +1,9 @@
 package org.pinky83.alfaplus.repository.data_jpa;
 
+import org.pinky83.alfaplus.model.Image;
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.repository.PatientRepository;
+import org.pinky83.alfaplus.service.ImageService;
 import org.pinky83.alfaplus.util.exception.ExceptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,9 +22,12 @@ import static org.pinky83.alfaplus.AuthorizedUser.GUEST_ID;
  * Created by Дмитрий on 17.12.2016./
  */
 @Repository
+@Transactional(readOnly = true)
 public class DataJpaPatientRepository implements PatientRepository{
     @Autowired
     private CrudPatientRepository repository;
+    @Autowired
+    private ImageService imageService;
 
     @Override
     @Transactional
@@ -34,10 +39,15 @@ public class DataJpaPatientRepository implements PatientRepository{
         return repository.save(patient);
     }
 
-    @Override
     public boolean delete(int id, int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID);
-        return repository.delete(id)!=0;}
+        List<Image> images = getByIdWithImages(id, userId).getImages();
+        if (images != null) {
+            images.forEach(i -> imageService.delete(i.getId(), userId));
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public Patient get(int id, int userId) {

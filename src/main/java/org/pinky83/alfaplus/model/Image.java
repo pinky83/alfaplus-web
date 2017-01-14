@@ -15,7 +15,7 @@ public class Image extends BaseEntity {
     @SequenceGenerator(name = "entity1Seq2", sequenceName = "AUTOIMAGEIDGEN", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq2")
     @Column(name = "AUTOIMAGEID")
-    private Integer id;
+    private int id;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "SERIES_NO")
@@ -43,12 +43,22 @@ public class Image extends BaseEntity {
 
     public Image(Integer id, Series series, Patient patient, Study study, LocalDateTime imageDate, String description, String fileName) {
         super(id);
+        if(super.getId()!=null)this.id = super.getId();
         this.series = series;
         this.patient = patient;
         this.study = study;
         this.imageDate = imageDate;
         this.description = description;
         this.fileName = fileName;
+    }
+
+    public Image(Series series, Patient patient, Study study, LocalDateTime imageDate, String description, String fileName) {
+        this(null, series, patient, study, imageDate, description, fileName);
+    }
+
+    @Override
+    public Integer getId() {
+        return this.id;
     }
 
     public Series getSeries() {
@@ -104,8 +114,10 @@ public class Image extends BaseEntity {
         return "Image{" +
                 "id=" + id +
                 ", imageDate=" + imageDate +
-                ", description='" + description + '\'' +
-                ", fileName='" + fileName + '\'' +
+                ", patient='" + patient.getName() + "'" +
+                ", description='" + description  + "'" +
+                ", address='" + patient.getComments()  + "'" +
+                ", fileName='" + fileName  + "'" +
                 '}';
     }
 }

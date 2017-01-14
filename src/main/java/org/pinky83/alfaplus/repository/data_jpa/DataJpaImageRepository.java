@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +25,15 @@ import static org.pinky83.alfaplus.AuthorizedUser.GUEST_ID;
  *
  */
 @Repository
+@Transactional(readOnly = true)
 public class DataJpaImageRepository implements ImageRepository{
     @Autowired
     private CrudImageRepository repository;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
+    @Transactional
     public Image save(Image image, int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID);
         if(!image.isNew() && getById(image.getId(), userId) == null) {
@@ -35,9 +43,15 @@ public class DataJpaImageRepository implements ImageRepository{
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID);
-        return repository.delete(id)!=0;
+        if(repository.delete(id)!=0){
+            entityManager.createQuery("DELETE FROM Series s WHERE s.id = :id").setParameter("id", id).executeUpdate();
+            entityManager.createQuery("DELETE FROM Study st WHERE st.id = :id").setParameter("id", id).executeUpdate();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -68,9 +82,33 @@ public class DataJpaImageRepository implements ImageRepository{
     public List<Image> getAllWithLazyFields(Collection<Image> source, int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
         List<Image> dest = new ArrayList<>();
-        source.stream().forEach(image -> {
+        source.parallelStream().forEach(image -> {
             dest.add(repository.getByIdWithLazyFields(image.getId()));
         });
         return dest;
+    }
+
+    @Override
+    public List<Image> getAllByDate(LocalDate date, int userId) {
+        ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
+        return repository.findByImageDateBetween(date.atStartOfDay(), date.atTime(23,59,59));
+    }
+
+    @Override
+    public List<Image> getLastDay(int userId) {
+        ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
+        return getAllByDate(repository.findTOPByImageDate().getImageDate().toLocalDate(),userId);
+    }
+
+    @Override
+    public Page<Image> getPreviousPage(Pageable pageable, int startId, int userId) {
+        ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
+        return repository.findByIdIsLessThanOrderByIdDesc(pageable, startId);
+    }
+
+    @Override
+    public Page<Image> getNextPage(Pageable pageable, int endId, int userId) {
+        ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
+        return repository.findByIdIsGreaterThanOrderByIdAsc(pageable, endId);
     }
 }

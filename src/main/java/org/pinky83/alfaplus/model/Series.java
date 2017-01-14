@@ -15,7 +15,7 @@ public class Series extends BaseEntity{
     @SequenceGenerator(name = "entity1Seq1", sequenceName="AUTOSERIESIDGEN", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq1")
     @Column(name = "AUTOSERIESID")
-    private Integer id;
+    private int id;
 
     @Column(name = "SERIES_DATE")
     private LocalDateTime seriesDate;
@@ -37,11 +37,17 @@ public class Series extends BaseEntity{
 
     public Series(Integer id, LocalDateTime seriesDate, String operator, String bodyPart, String position, Image image) {
         super(id);
+        if(super.getId()!=null)this.id = super.getId();
         this.seriesDate = seriesDate;
         this.operator = operator;
         this.bodyPart = bodyPart;
         this.position = position;
         this.image = image;
+    }
+
+    @Override
+    public Integer getId() {
+        return this.id;
     }
 
     public LocalDateTime getSeriesDate() {

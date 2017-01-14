@@ -6,6 +6,7 @@ import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,10 +22,18 @@ public interface ImageService extends GenericService<Image>{
 
     List<Image> getAllWithLazyFields(Collection<Image> source, int userId) throws AccessViolationException;
 
+    List<Image> getAllByDate(LocalDate date, int userId) throws AccessViolationException;
+
     @Override
     Image getById(int id, int userId) throws NotFoundException, AccessViolationException;
 
     Image getByIdWithLazyFields(int id, int userId) throws NotFoundException, AccessViolationException;
+
+    List<Image> getLastDay (int userId) throws AccessViolationException;
+
+    Page<Image> getPreviousPage(Pageable pageable, int startId, int userId) throws AccessViolationException;
+
+    Page<Image> getNextPage(Pageable pageable, int endId, int userId) throws AccessViolationException;
 
     @Override
     void delete(int id, int userId) throws NotFoundException, AccessViolationException;

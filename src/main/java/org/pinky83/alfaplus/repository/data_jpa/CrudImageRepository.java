@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public interface CrudImageRepository extends JpaRepository<Image, Integer> {
 
     Image getById(int id);
 
-    @Query("SELECT i FROM Image i JOIN FETCH i.patient JOIN FETCH i.series JOIN FETCH i.study WHERE i.id = ?1")
+    @Query("SELECT i FROM Image i JOIN FETCH i.series JOIN FETCH i.study WHERE i.id = ?1")
     Image getByIdWithLazyFields(int id);
 
     @Override
@@ -32,6 +33,15 @@ public interface CrudImageRepository extends JpaRepository<Image, Integer> {
 
     @Override
     List<Image> findAll();
+
+    List<Image> findByImageDateBetween(LocalDateTime date1, LocalDateTime date2);
+
+    Page<Image> findByIdIsLessThanOrderByIdDesc(Pageable pageable, int id);
+
+    Page<Image> findByIdIsGreaterThanOrderByIdAsc(Pageable pageable, int id);
+
+    @Query("SELECT MAX (i) FROM Image i")
+    Image findTOPByImageDate();
 
     @Override
     Page<Image> findAll(Pageable pageable);

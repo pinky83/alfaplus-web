@@ -4,6 +4,7 @@ import org.pinky83.alfaplus.model.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,7 +26,15 @@ public interface ImageRepository {
     // ORDERED dateTime// access violation exception for guests
     List<Image> getAll(int userId);
 
+    List<Image> getLastDay(int userId);
+
+    Page<Image> getPreviousPage(Pageable pageable, int startId, int userId);
+
+    Page<Image> getNextPage(Pageable pageable, int endId, int userId);
+
     Page<Image> getAll(Pageable pageable, int userId);
 
     List<Image> getAllWithLazyFields(Collection<Image> source, int userId);
+
+    List<Image> getAllByDate(LocalDate date, int userId);
 }

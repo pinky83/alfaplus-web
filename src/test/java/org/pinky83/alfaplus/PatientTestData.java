@@ -27,6 +27,9 @@ public class PatientTestData {
     public static final Patient PATIENT6 = new Patient(23973, "ЯРОВЕНКО В М ", LocalDate.of(1987, Month.JANUARY, 1), null, 0, "ітк");
     public static final Patient PATIENT7 = new Patient(LAST_PATIENT_ID, "БАЛІЙ РАЇСА ГРИГ", LocalDate.of(1950, Month.JANUARY, 1), null, 0, "вехове");
 
+    public static final Patient PATIENT8 = new Patient(4760, "ЯКОВЕНКО ДМИТРО КОНСТ", LocalDate.of(1983, Month.JANUARY, 1), null, 0, "шмідта");
+
+
     public static final List<Patient> PATIENTS = Arrays.asList(PATIENT7, PATIENT6, PATIENT5, PATIENT4, PATIENT3, PATIENT2, PATIENT1);
 
     public static Patient getCreated() {

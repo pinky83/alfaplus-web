@@ -13,8 +13,10 @@ import java.util.Collection;
 import static org.pinky83.alfaplus.AuthorizedUser.ADMIN_ID;
 import static org.pinky83.alfaplus.AuthorizedUser.DOCTOR_ID;
 import static org.pinky83.alfaplus.AuthorizedUser.GUEST_ID;
+import static org.pinky83.alfaplus.ImageTestData.IMAGES;
 import static org.pinky83.alfaplus.PatientTestData.*;
 import static org.pinky83.alfaplus.PatientTestData.MATCHER;
+import static org.pinky83.alfaplus.ImageTestData.IMAGE_MODEL_MATCHER;
 
 /**
  * Created by Дмитрий on 23.12.2016.
@@ -23,7 +25,9 @@ import static org.pinky83.alfaplus.PatientTestData.MATCHER;
 public class PatientServiceTest extends AbstractServiceTest {
 
     @Autowired
-    protected PatientService service;
+    private PatientService service;
+    @Autowired
+    private ImageService imageService;
 
     @Test
     public void testGet() throws Exception {
@@ -39,12 +43,8 @@ public class PatientServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetWithImages() throws Exception {
-        Patient patient = service.getByIdWithImages(PATIENT1.getId(), DOCTOR_ID);
-        System.out.println(patient.toString());
-        for (Image image: patient.getImages()
-                ) {
-            System.out.println("    " + image.toString());
-        }
+        Patient patient = service.getByIdWithImages(PATIENT8.getId(), DOCTOR_ID);
+        IMAGE_MODEL_MATCHER.assertCollectionEquals(IMAGES, patient.getImages());
     }
 
     @Test
@@ -52,6 +52,13 @@ public class PatientServiceTest extends AbstractServiceTest {
         service.delete(PATIENT6.getId(), ADMIN_ID);
         thrown.expect(NotFoundException.class);
         service.getById(PATIENT6.getId(), ADMIN_ID);
+    }
+
+    @Test
+    public void testCascadeDelete() throws Exception {
+        service.delete(PATIENT8.getId(), ADMIN_ID);
+        thrown.expect(NotFoundException.class);
+        IMAGES.forEach(image -> imageService.getById(image.getId(), ADMIN_ID));
     }
 
     @Test

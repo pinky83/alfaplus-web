@@ -14,13 +14,13 @@ public class Study extends BaseEntity{
     @SequenceGenerator(name = "entity1Seq3", sequenceName="AUTOSTUDYIDGEN", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity1Seq3")
     @Column(name = "AUTOSTUDYID")
-    private Integer id;
+    private int id;
 
     @Column(name = "STUDY_DATE")
     private LocalDateTime studyDate;
 
     @Column(name = "PATIENT_AGE")
-    private Integer age;
+    private String age;
 
     @Column(name = "ADDMITTING_DIAGNOSES")
     private String diagnoses;
@@ -31,19 +31,25 @@ public class Study extends BaseEntity{
     public Study() {
     }
 
-    public Study(Integer id, LocalDateTime studyDate, int age, String diagnoses, Image image) {
+    public Study(Integer id, LocalDateTime studyDate, String age, String diagnoses, Image image) {
         super(id);
+        if(super.getId()!=null)this.id = super.getId();
         this.studyDate = studyDate;
         this.age = age;
         this.diagnoses = diagnoses;
         this.image = image;
     }
 
+    @Override
+    public Integer getId() {
+        return this.id;
+    }
+
     public LocalDateTime getStudyDate() {
         return studyDate;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
@@ -59,7 +65,7 @@ public class Study extends BaseEntity{
         this.studyDate = studyDate;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
