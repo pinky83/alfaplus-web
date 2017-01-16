@@ -15,8 +15,8 @@ import java.util.Collection;
  * Created by Дмитрий on 15.12.2016./
  */
 @Controller
-public class PatientController {
-    private final Logger LOG = LoggerFactory.getLogger(PatientController.class);
+public abstract class AbstractPatientController {
+    private final Logger LOG = LoggerFactory.getLogger(AbstractPatientController.class);
 
     @Autowired
     private PatientService service;

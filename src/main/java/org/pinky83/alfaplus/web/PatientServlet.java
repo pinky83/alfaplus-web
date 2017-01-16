@@ -4,7 +4,7 @@ import org.pinky83.alfaplus.LoggedUser;
 import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.model.User;
 import org.pinky83.alfaplus.service.UserService;
-import org.pinky83.alfaplus.web.patient.PatientController;
+import org.pinky83.alfaplus.web.patient.AbstractPatientController;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,7 +22,7 @@ import java.time.LocalTime;
  */
 public class PatientServlet extends HttpServlet{
 
-    private PatientController controller;
+    private AbstractPatientController controller;
 
     private UserService userService;
 
@@ -34,7 +34,7 @@ public class PatientServlet extends HttpServlet{
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-        controller = appCtx.getBean(PatientController.class);
+        controller = appCtx.getBean(AbstractPatientController.class);
         userService = appCtx.getBean(UserService.class);
     }
 

@@ -1,4 +1,4 @@
-package org.pinky83.alfaplus.util.exception;
+package org.pinky83.alfaplus.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

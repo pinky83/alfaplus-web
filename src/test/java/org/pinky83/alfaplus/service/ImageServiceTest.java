@@ -3,7 +3,7 @@ package org.pinky83.alfaplus.service;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pinky83.alfaplus.model.Image;
-import org.pinky83.alfaplus.util.exception.CollectionSizeFetcher;
+import org.pinky83.alfaplus.util.CollectionSizeFetcher;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
