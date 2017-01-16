@@ -1,9 +1,12 @@
 package org.pinky83.alfaplus.model;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -14,6 +17,7 @@ import java.util.List;
 /**
  * Created by Дмитрий on 29.11.2016./
  */
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "XPATIENT")
 @Access(AccessType.FIELD)

@@ -33,4 +33,6 @@ public interface PatientService extends GenericService<Patient> {
     Patient create(Patient patient, int userId) throws AccessViolationException;
 
     void update(Patient newT, int userId) throws NotFoundException, AccessViolationException;
+
+    void evictCache();
 }

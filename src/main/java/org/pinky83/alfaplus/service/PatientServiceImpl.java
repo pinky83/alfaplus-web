@@ -6,6 +6,8 @@ import org.pinky83.alfaplus.util.exception.AccessViolationException;
 import org.pinky83.alfaplus.util.exception.ExceptionUtil;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository repository;
 
+    @Cacheable("patients")
     @Override
     public Collection<Patient> getAll(int userId) {
         return repository.getAll(userId);
@@ -45,22 +48,32 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Cacheable("patients")
     public Collection<Patient> getAllByName(String name, int userId) {
         return repository.getAllByName(name, userId);
     }
 
+    @CacheEvict(value = "patients", allEntries = true)
     @Override
     public void delete(int id, int userId) {
         ExceptionUtil.checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
+    @CacheEvict(value = "patients", allEntries = true)
     @Override
     public Patient create(Patient patient, int userId) {
         return repository.save(patient, userId);
     }
 
+    @CacheEvict(value = "patients", allEntries = true)
     @Override
     public void update(Patient newT, int userId) {
         repository.save(newT, userId);
+    }
+
+    @CacheEvict(value = "patients", allEntries = true)
+    @Override
+    public void evictCache() {
+
     }
 }

@@ -93,10 +93,10 @@ public class PatientServiceTest extends AbstractServiceTest {
     public void testGetBetween() throws Exception {
         Collection<Patient> tested =  service.getFilteredAll(LocalDate.of(1916, Month.JANUARY, 1), LocalDate.of(1919, Month.JANUARY, 1), DOCTOR_ID);
         Collection<Patient> dest = service.getAllWithImages(tested, DOCTOR_ID);
-        dest.stream().forEach(patient -> {
+        dest.forEach(patient -> {
             System.out.println(patient.toString());
-            for (Image image: patient.getImages()
-                 ) {
+            for (Image image : patient.getImages()
+                    ) {
                 System.out.println("    " + image.toString());
             }
         });
@@ -107,9 +107,9 @@ public class PatientServiceTest extends AbstractServiceTest {
     public void testGetByName() throws Exception {
         Collection<Patient> tested = service.getAllByName("Яковенко Дмитро", DOCTOR_ID);
         Collection<Patient> dest = service.getAllWithImages(tested, DOCTOR_ID);
-        dest.stream().forEach(patient -> {
+        dest.forEach(patient -> {
             System.out.println(patient.toString());
-            for (Image image: patient.getImages()
+            for (Image image : patient.getImages()
                     ) {
                 System.out.println("    " + image.toString());
             }

@@ -38,12 +38,16 @@ public class DataJpaPatientRepository implements PatientRepository{
         }
         return repository.save(patient);
     }
-
+    @Transactional
     public boolean delete(int id, int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID);
-        List<Image> images = getByIdWithImages(id, userId).getImages();
-        if (images != null) {
-            images.forEach(i -> imageService.delete(i.getId(), userId));
+        Patient actual = repository.getById(id);
+        if (actual!= null) {
+            List<Image> images = getByIdWithImages(id, userId).getImages();
+            if (images.size() != 0) {
+                images.forEach(i -> imageService.delete(i.getId(), userId));
+            }
+            repository.delete(id);
             return true;
         }
         return false;
@@ -78,7 +82,7 @@ public class DataJpaPatientRepository implements PatientRepository{
     public Collection<Patient> getAllWithImages(Collection<Patient> source, int userId) {
         ExceptionUtil.checkUserId(userId, ADMIN_ID, DOCTOR_ID);
         List<Patient> dest = new ArrayList<>();
-       source.stream().forEach(patient -> {
+       source.forEach(patient -> {
            dest.add(repository.getByIdWithImages(patient.getId()));
        });
         return dest;
