@@ -29,8 +29,8 @@ public class Series extends BaseEntity{
     @Column(name = "VIEW_POSITION")
     private String position;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "series")
-    private Image image;
+//    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "series")
+//    private Image image;
 
     public Series() {
     }
@@ -42,7 +42,7 @@ public class Series extends BaseEntity{
         this.operator = operator;
         this.bodyPart = bodyPart;
         this.position = position;
-        this.image = image;
+//        this.image = image;
     }
 
     @Override
@@ -66,9 +66,9 @@ public class Series extends BaseEntity{
         return position;
     }
 
-    public Image getImage() {
-        return image;
-    }
+//    public Image getImage() {
+//        return image;
+//    }
 
     public void setSeriesDate(LocalDateTime seriesDate) {
         this.seriesDate = seriesDate;
@@ -86,9 +86,9 @@ public class Series extends BaseEntity{
         this.position = position;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
+//    public void setImage(Image image) {
+//        this.image = image;
+//    }
 
     @Override
     public String toString() {

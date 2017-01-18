@@ -25,8 +25,8 @@ public class Study extends BaseEntity{
     @Column(name = "ADDMITTING_DIAGNOSES")
     private String diagnoses;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "study")
-    private Image image;
+//    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "study")
+//    private Image image;
 
     public Study() {
     }
@@ -37,7 +37,7 @@ public class Study extends BaseEntity{
         this.studyDate = studyDate;
         this.age = age;
         this.diagnoses = diagnoses;
-        this.image = image;
+//        this.image = image;
     }
 
     @Override
@@ -57,9 +57,9 @@ public class Study extends BaseEntity{
         return diagnoses;
     }
 
-    public Image getImage() {
-        return image;
-    }
+//    public Image getImage() {
+//        return image;
+//    }
 
     public void setStudyDate(LocalDateTime studyDate) {
         this.studyDate = studyDate;
@@ -73,9 +73,9 @@ public class Study extends BaseEntity{
         this.diagnoses = diagnoses;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
+//    public void setImage(Image image) {
+//        this.image = image;
+//    }
 
     @Override
     public String toString() {

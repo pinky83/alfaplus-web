@@ -50,14 +50,14 @@ public class PatientServlet extends HttpServlet{
         String actioon = req.getParameter("action");
 
         if (actioon.equalsIgnoreCase("list_patient")){
-            req.setAttribute("patientList", controller.getAll(loggedUser.getId()));
+            req.setAttribute("patientList", controller.getAll());
             req.getRequestDispatcher("patientList.jsp").forward(req, resp);
         }
         else if(actioon.equalsIgnoreCase("delete")){
             int id = Integer.parseInt(req.getParameter("id"));
-            controller.delete(id, loggedUser.getId());
+            controller.delete(id);
 
-            req.setAttribute("patientList", controller.getAll(loggedUser.getId()));
+            req.setAttribute("patientList", controller.getAll());
             req.getRequestDispatcher("patientList.jsp").forward(req, resp);
         }
         else resp.setStatus(400);
@@ -74,10 +74,10 @@ public class PatientServlet extends HttpServlet{
         String comment = req.getParameter("comment");
         if(!(name.equals("")&&comment.equals(""))) {
             Patient newPatient = new Patient(name, LocalDate.now(), LocalTime.now(), 1, comment);
-            controller.create(newPatient, testUser);
+            controller.create(newPatient);
         }
 
-        req.setAttribute("patientList", controller.getAll(loggedUser.getId()));
+        req.setAttribute("patientList", controller.getAll());
         req.getRequestDispatcher("patientList.jsp").forward(req, resp);
     }
 }

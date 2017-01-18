@@ -1,5 +1,6 @@
 package org.pinky83.alfaplus.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -45,6 +46,7 @@ public class Patient extends NamedEntity{
     private String comments;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "patient")
+    @JsonIgnoreProperties({"series", "study", "patient"})
     private List<Image> images;
 
     public Patient() {

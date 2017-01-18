@@ -1,6 +1,7 @@
 package org.pinky83.alfaplus.model;
 
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -32,6 +33,7 @@ public class Image extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "PATIENT_NO")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnoreProperties("images")
     private Patient patient;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

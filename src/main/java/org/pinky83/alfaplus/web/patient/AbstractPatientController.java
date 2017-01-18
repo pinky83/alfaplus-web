@@ -1,7 +1,6 @@
 package org.pinky83.alfaplus.web.patient;
 
 import org.pinky83.alfaplus.model.Patient;
-import org.pinky83.alfaplus.model.User;
 import org.pinky83.alfaplus.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,8 @@ import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
 import java.util.Collection;
+
+import static org.pinky83.alfaplus.AuthorizedUser.ADMIN_ID;
 
 /**
  * Created by Дмитрий on 15.12.2016./
@@ -21,30 +22,58 @@ public abstract class AbstractPatientController {
     @Autowired
     private PatientService service;
 
-    public Patient create(Patient meal, User user) {
-        LOG.info("create " + meal + " : " + user);
-        return service.create(meal, user.getId());
+    public Patient create(Patient patient) {
+        int userId = ADMIN_ID;
+        LOG.info("create patient {} for {} ", patient.getName(), userId);
+        return service.create(patient, userId);
     }
 
-    public void delete(int id, int userId) {
+    public void delete(int id) {
+        int userId = ADMIN_ID;
+        LOG.info("delete patient {} for User {}", id, userId);
         service.delete(id, userId);
     }
 
-    public Patient get(int id, int userId) {
+    public Patient get(int id) {
+        int userId = ADMIN_ID;
+        LOG.info("get patient {} for User {}", id, userId);
         return service.getById(id, userId);
     }
 
-    public Collection<Patient> getAll(int userId) {
-        LOG.info("getAll");
+    public Patient getWithImages(int id) {
+        int userId = ADMIN_ID;
+        LOG.info("get patient {} with images for User {}", id, userId);
+        return service.getByIdWithImages(id, userId);
+    }
+
+    public Collection<Patient> getAll() {
+        int userId = ADMIN_ID;
+        LOG.info("getAll for user {}", userId);
         return service.getAll(userId);
     }
 
-    public Collection<Patient> getFilteredAll(int userId, LocalDate startDate, LocalDate endDate) {
+    public Collection<Patient> getAllWithImages(Collection<Patient> source) {
+        int userId = ADMIN_ID;
+        LOG.info("getAll with images for user {}", userId);
+        return service.getAllWithImages(source, userId);
+    }
+
+    public Collection<Patient> getAllByName(String name) {
+        int userId = ADMIN_ID;
+        LOG.info("get patients by name={} for user {}", name, userId);
+        return service.getAllByName(name, userId);
+    }
+
+    public Collection<Patient> getFilteredAll(LocalDate startDate, LocalDate endDate) {
+        int userId = ADMIN_ID;
+        LOG.info("get patients between {} and {} for user {}", startDate, endDate, userId);
         return service.getFilteredAll(startDate, endDate, userId);
 
     }
 
-    public void update(Patient patient, User user) {
-        service.update(patient, user.getId());
+    public void update(Patient patient) {
+        int userId = ADMIN_ID;
+        LOG.info("update patient {} for user {}", patient.getName(), userId);
+        service.update(patient, userId);
     }
 }
