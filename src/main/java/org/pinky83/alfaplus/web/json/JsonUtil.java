@@ -9,8 +9,7 @@ import java.util.List;
 import static org.pinky83.alfaplus.web.json.JacksonObjectMapper.getMapper;
 
 /**
- * User: gkislin
- * Date: 30.04.2014
+ * Created by Дмитрий on 20.01.2017.//
  */
 public class JsonUtil {
 

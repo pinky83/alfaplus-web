@@ -73,6 +73,11 @@ public class Image extends BaseEntity {
         return this.id;
     }
 
+    public void setThisId(int id) {
+        super.setId(id);
+        this.id = super.getId();
+    }
+
     public Series getSeries() {
         return series;
     }

@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.pinky83.alfaplus.PatientTestData.PATIENT1;
 import static org.pinky83.alfaplus.PatientTestData.PATIENT8;
@@ -20,10 +21,15 @@ import static org.pinky83.alfaplus.PatientTestData.PATIENT8;
  *
  */
 public class ImageTestData {
-    public static final ModelMatcher<Image> IMAGE_MODEL_MATCHER = new ModelMatcher<>();
-    public static final ModelMatcher<Series> SERIES_MODEL_MATCHER = new ModelMatcher<>();
-    public static final ModelMatcher<Study> STUDY_MODEL_MATCHER = new ModelMatcher<>();
 
+    public static final int TEST_PAGE1_N_OF_ELEMENTS = 17;
+    public static final int TEST_PAGE1_IMAGES_COLLECTION_HASH = -997072353;
+    public static final int TEST_PAGE1_N_OF_FIRST_ELEMENT = 46565;
+    public static final int TEST_PAGE1_N_OF_LAST_ELEMENT = 46581;
+
+    public static final int LAST_PAGE_N_OF_ELEMENTS = 22;
+    public static final int LAST_PAGE_SIZE_WITHOUT_LAZY_FIELDS = 4158;
+    public static final int LAST_PAGE_IMAGES_COLLECTION_HASH = 1244764481;
     public static final int N_OF_ELEMENTS = 61661;
     public static final int SIZE_WITHOUT_LAZY_FIELDS = 13854074;
     public static final int IMAGES_COLLECTION_HASH = 2120565663;
@@ -42,9 +48,9 @@ public class ImageTestData {
     public static final Image IMAGE6 = new Image(53402, null, PATIENT8, null, LocalDateTime.of(LocalDate.of(2015, Month.APRIL, 29), LocalTime.of(9, 29, 8)), null, "00053402.JPG");
     public static final Image IMAGE7 = new Image(61396, null, PATIENT8, null, LocalDateTime.of(LocalDate.of(2016, Month.JUNE, 13), LocalTime.of(10, 6, 48)), "Патологічних змін не виявлено", "00061396.JPG");
 
-    public static final Series IMAGE7_SERIES = new Series(IMAGE7.getId(), LocalDateTime.of(LocalDate.of(2016, Month.JUNE, 13), LocalTime.of(10, 6, 48)),null, null, null, IMAGE7);
+    public static final Series IMAGE7_SERIES = new Series(IMAGE7.getId(), LocalDateTime.of(LocalDate.of(2016, Month.JUNE, 13), LocalTime.of(10, 6, 48)),null, null, null);
 
-    public static final Study IMAGE7_STUDY = new Study(IMAGE7.getId(), LocalDateTime.of(LocalDate.of(2016, Month.JUNE, 13), LocalTime.of(10, 6, 48)), "33", null, IMAGE7);
+    public static final Study IMAGE7_STUDY = new Study(IMAGE7.getId(), LocalDateTime.of(LocalDate.of(2016, Month.JUNE, 13), LocalTime.of(10, 6, 48)), "33", null);
 
     public static final List<Image> IMAGES = Arrays.asList(IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5, IMAGE6, IMAGE7);
 
@@ -55,4 +61,32 @@ public class ImageTestData {
     public static Image getUpdated() {
         return new Image(FIRST_IMAGE_ID+1, null, PATIENT1, null, LocalDateTime.of(LocalDate.of(2016, Month.JUNE, 13), LocalTime.of(10, 6, 48)), "обновленное описание", "обновленный.JPG");
     }
+
+    public static final ModelMatcher<Image> IMAGE_MODEL_MATCHER = new ModelMatcher<>(Image.class,
+            (expected, actual) -> expected == actual ||
+                    (Objects.equals(expected.getId(), actual.getId())
+                            && Objects.equals(expected.getDescription(), actual.getDescription())
+                            && Objects.equals(expected.getImageDate(), actual.getImageDate())
+                            && Objects.equals(expected.getFileName(), actual.getFileName())
+                    )
+    );
+
+    public static final ModelMatcher<Series> SERIES_MODEL_MATCHER = new ModelMatcher<>(Series.class,
+            (expected, actual) -> expected == actual ||
+                    (Objects.equals(expected.getId(), actual.getId())
+                            && Objects.equals(expected.getSeriesDate(), actual.getSeriesDate())
+                            && Objects.equals(expected.getOperator(), actual.getOperator())
+                            && Objects.equals(expected.getBodyPart(), actual.getBodyPart())
+                            && Objects.equals(expected.getPosition(), actual.getPosition())
+                    )
+    );
+
+    public static final ModelMatcher<Study> STUDY_MODEL_MATCHER = new ModelMatcher<>(Study.class,
+            (expected, actual) -> expected == actual ||
+                    (Objects.equals(expected.getId(), actual.getId())
+                            && Objects.equals(expected.getStudyDate(), actual.getStudyDate())
+                            && Objects.equals(expected.getAge(), actual.getAge())
+                            && Objects.equals(expected.getDiagnoses(), actual.getDiagnoses())
+                    )
+            );
 }

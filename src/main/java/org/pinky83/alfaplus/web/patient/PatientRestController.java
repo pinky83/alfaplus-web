@@ -1,10 +1,16 @@
 package org.pinky83.alfaplus.web.patient;
 
 import org.pinky83.alfaplus.model.Patient;
+import org.pinky83.alfaplus.util.exception.NotFoundException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -15,15 +21,22 @@ import java.util.Collection;
 @RestController
 @RequestMapping(value = PatientRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class PatientRestController extends AbstractPatientController{
+
     static final String REST_URL = "/rest/patients";
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleException(NotFoundException ex) throws IOException {
+        //response.sendError(404, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
     @GetMapping("/{id}")
-    public Patient get(@PathVariable("id") int id) {
+    public Patient get(@PathVariable int id) {
         return super.get(id);
     }
 
     @GetMapping("/full/{id}")
-    public Patient getWithImages(@PathVariable("id") int id) {
+    public Patient getWithImages(@PathVariable int id) {
         return super.getWithImages(id);
     }
 
@@ -33,12 +46,12 @@ public class PatientRestController extends AbstractPatientController{
     }
 
     @GetMapping("/full/?source")
-    public Collection<Patient> getAllWithImages(@RequestParam("source") Collection<Patient> source) {
+    public Collection<Patient> getAllWithImages(@RequestParam Collection<Patient> source) {
         return super.getAllWithImages(source);
     }
 
     @GetMapping("/byName/{name}")
-    public Collection<Patient> getAllByName(@PathVariable("name") String name) {
+    public Collection<Patient> getAllByName(@PathVariable String name) {
         return super.getAllByName(name);
     }
 
@@ -52,14 +65,23 @@ public class PatientRestController extends AbstractPatientController{
         return super.create(patient);
     }
 
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Patient> createWithLocation(@RequestBody Patient patient) {
+        Patient created = super.create(patient);
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable int id) {
         super.delete(id);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    //TODO need to refactor method, patient id not used now
-    public void update(@RequestBody Patient patient, @PathVariable("id") int id) {
-        super.update(patient);
+    public void update(@RequestBody Patient patient, @PathVariable int id) {
+        super.update(patient, id);
     }
 }

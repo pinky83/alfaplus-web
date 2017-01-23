@@ -28,11 +28,13 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Cacheable("patients")
     public Collection<Patient> getAllWithImages(Collection<Patient> source, int userId) throws AccessViolationException {
         return repository.getAllWithImages(source, userId);
     }
 
     @Override
+    @Cacheable("patients")
     public Collection<Patient> getFilteredAll(LocalDate startTime, LocalDate endTime, int userId) {
         return repository.getBetween(startTime, endTime, userId);
     }

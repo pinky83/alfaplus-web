@@ -35,7 +35,7 @@ public class Series extends BaseEntity{
     public Series() {
     }
 
-    public Series(Integer id, LocalDateTime seriesDate, String operator, String bodyPart, String position, Image image) {
+    public Series(Integer id, LocalDateTime seriesDate, String operator, String bodyPart, String position) {
         super(id);
         if(super.getId()!=null)this.id = super.getId();
         this.seriesDate = seriesDate;

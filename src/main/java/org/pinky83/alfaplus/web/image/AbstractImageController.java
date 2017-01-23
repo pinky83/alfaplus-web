@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.pinky83.alfaplus.AuthorizedUser.ADMIN_ID;
@@ -63,7 +65,7 @@ public abstract class AbstractImageController {
     }
 
     public void update(Image image, int id) {
-        image.setId(id);
+        image.setThisId(id);
         int userId = ADMIN_ID;
         LOG.info("update {} for User {}", image, userId);
         service.update(image, userId);
@@ -97,6 +99,10 @@ public abstract class AbstractImageController {
     public List<Image> getPreviousPage(int firstId) {
         int userId = ADMIN_ID;
         LOG.info("getNextPage ends before id={} for User {}", firstId, userId);
-        return service.getPreviousPage(new PageRequest(0, 70), firstId, userId).getContent();
+        List<Image> source = service.getPreviousPage(new PageRequest(0, 70), firstId, userId).getContent();
+        List<Image> dest = new ArrayList<>();
+        source.forEach(dest::add);
+        Collections.reverse(dest);
+        return dest;
     }
 }

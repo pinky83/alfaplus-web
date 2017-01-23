@@ -48,6 +48,8 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
+    <bean class="org.pinky83.alfaplus.repository.JpaUtil"/>
+
     <context:component-scan base-package="org.pinky83.alfaplus.**.repository.data_jpa"/>
     <jpa:repositories base-package="org.pinky83.alfaplus.**.repository.data_jpa"/>
     <!--<context:component-scan base-package="org.pinky83.alfaplus.**.repository"/>-->

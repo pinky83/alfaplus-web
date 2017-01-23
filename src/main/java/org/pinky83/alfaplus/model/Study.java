@@ -31,7 +31,7 @@ public class Study extends BaseEntity{
     public Study() {
     }
 
-    public Study(Integer id, LocalDateTime studyDate, String age, String diagnoses, Image image) {
+    public Study(Integer id, LocalDateTime studyDate, String age, String diagnoses) {
         super(id);
         if(super.getId()!=null)this.id = super.getId();
         this.studyDate = studyDate;

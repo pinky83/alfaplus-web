@@ -86,6 +86,11 @@ public class Patient extends NamedEntity{
         return comments;
     }
 
+    public void setThisId(int id) {
+        super.setId(id);
+        this.id = super.getId();
+    }
+
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
@@ -100,6 +105,10 @@ public class Patient extends NamedEntity{
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
     public List<Image> getImages() {

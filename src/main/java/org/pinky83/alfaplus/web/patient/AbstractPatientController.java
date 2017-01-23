@@ -71,7 +71,8 @@ public abstract class AbstractPatientController {
 
     }
 
-    public void update(Patient patient) {
+    public void update(Patient patient, int id) {
+        patient.setThisId(id);
         int userId = ADMIN_ID;
         LOG.info("update patient {} for user {}", patient.getName(), userId);
         service.update(patient, userId);

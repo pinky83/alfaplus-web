@@ -8,13 +8,22 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Дмитрий on 23.12.2016.
  *
  */
 public class PatientTestData {
-    public static final ModelMatcher<Patient> MATCHER = new ModelMatcher<>();
+    public static final ModelMatcher<Patient> MATCHER = new ModelMatcher<>(Patient.class,
+            (expected, actual) -> expected == actual ||
+                    (Objects.equals(expected.getBirthDate(), actual.getBirthDate())
+                            && Objects.equals(expected.getId(), actual.getId())
+                            && Objects.equals(expected.getName(), actual.getName())
+                            && Objects.equals(expected.getComments(), actual.getComments())
+                            && Objects.equals(expected.getSex(), actual.getSex())
+                    )
+            );
 
     public static final int FIRST_PATIENT_ID = 4;
     public static final int LAST_PATIENT_ID = 24633;
@@ -28,7 +37,7 @@ public class PatientTestData {
     public static final Patient PATIENT7 = new Patient(LAST_PATIENT_ID, "БАЛІЙ РАЇСА ГРИГ", LocalDate.of(1950, Month.JANUARY, 1), null, 0, "вехове");
 
     public static final Patient PATIENT8 = new Patient(4760, "ЯКОВЕНКО ДМИТРО КОНСТ", LocalDate.of(1983, Month.JANUARY, 1), null, 0, "шмідта");
-
+    public static final Patient PATIENT9 = new Patient(20550, "ВОВК КАТЕРИНА ЮХИМІВНА", LocalDate.of(1917, Month.JANUARY, 1), null, 1, "томашівка");
 
     public static final List<Patient> PATIENTS = Arrays.asList(PATIENT7, PATIENT6, PATIENT5, PATIENT4, PATIENT3, PATIENT2, PATIENT1);
 
