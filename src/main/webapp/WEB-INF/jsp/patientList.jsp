@@ -6,7 +6,7 @@
     <title>Patient list</title>
 </head>
 <body>
-<h2><a href="index.html">Home</a></h2>
+<h2><a href="../../index.jsp">Home</a></h2>
 
 <h1 align="left">Add Patient</h1>
 <form id="editor" action="patients" method="post">

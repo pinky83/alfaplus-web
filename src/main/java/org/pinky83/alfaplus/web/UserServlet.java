@@ -20,6 +20,6 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        LOG.debug("redirect to userlist");
 
-       resp.sendRedirect("userList.jsp");
+       resp.sendRedirect("imageList.jsp");
     }
 }
