@@ -93,13 +93,13 @@ public abstract class AbstractImageController {
     public List<Image> getNextPage(int lastId) {
         int userId = ADMIN_ID;
         LOG.info("getNextPage starts after id={} for User {}", lastId, userId);
-        return service.getNextPage(new PageRequest(0, 70), lastId, userId).getContent();
+        return service.getNextPage(new PageRequest(0, 20), lastId, userId).getContent();
     }
 
     public List<Image> getPreviousPage(int firstId) {
         int userId = ADMIN_ID;
         LOG.info("getNextPage ends before id={} for User {}", firstId, userId);
-        List<Image> source = service.getPreviousPage(new PageRequest(0, 70), firstId, userId).getContent();
+        List<Image> source = service.getPreviousPage(new PageRequest(0, 20), firstId, userId).getContent();
         List<Image> dest = new ArrayList<>();
         source.forEach(dest::add);
         Collections.reverse(dest);
