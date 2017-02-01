@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-7">
                     <div class="view-box">
-                        <table class="table table-striped display small" id="datatable">
+                        <table class="table table-striped display small " id="datatable">
                             <thead>
                             <tr>
                                 <th><fmt:message key="images.id"/></th>
@@ -26,28 +26,31 @@
                                 <th><fmt:message key="images.name"/></th>
                                 <th><fmt:message key="images.sex"/></th>
                                 <th><fmt:message key="images.birthday"/></th>
+                                <%--<th><fmt:message key="images.description"/></th>--%>
                             </tr>
                             </thead>
-                            <jsp:useBean id="image"  scope="page" class="org.pinky83.alfaplus.model.Image"/>
-                            <c:set var="counter" scope="request" value="0"/>
-                            <c:forEach items="${imageList}" var="image">
-                                <c:set var="counter" scope="request" value="${counter+1}"/>
-                                <tr>
-                                    <td>${image.id}</td>
-                                    <td>${image.imageDate}</td>
-                                    <td>${image.patient.name}</td>
-                                    <td>${image.patient.sex}</td>
-                                    <td>${image.patient.birthDate}</td>
-                                </tr>
-                                <c:set var="lastId" scope="request" value="${image.id}"/>
-                                <c:set var="firstId" scope="request" value="${lastId-counter+1}"/>
-                            </c:forEach>
                         </table>
                     </div>
                  </div>
-                <div class="col-lg-2-offset-2 col-md-8-offset-2 col-sm-3-offset-1">
-                    <h4 align="center">Поиск и навигация</h4>
+
+
+                <div class="col-lg-2-offset-2 col-md-4-offset-2 col-sm-3-offset-1" align="center">
+                    <h4 align="center">Предварительный просмотр</h4>
+                    <br>
+                    <div class="mini-image> row">
+                        <img id="image_thumb" src="thumb/00048125" class="img-thumbnail" alt=<fmt:message key="images.alt"/>>
+                        <br>
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="image-description col-lg-4 col-md-4 col-sm-4 col xs-4">
+                                    <textarea class="form-control" readonly="readonly" rows="5" placeholder="Здесь будет описание снимка"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="clearfix"></div>
 
             </div>
@@ -55,16 +58,9 @@
 
         <div class="clearfix"></div>
 
-        <div class="col-lg-8 col-md-8 col-sm-7">
-            <button class="btn btn-info" data-toggle="collapse" data-target="#spoiler-1">Посмотреть описание</button>
-            <div class="collapse in" id="spoiler-1">
-                    <p>test test test!</p>
-            </div>
-        </div>
-
         <div class="panel pagination s" align="center" style="width: 100%" id="nav-buttons" >
-            <a class="btn btn-md btn-info" href="images/previous/${firstId}" id="${image.id}"><fmt:message key="images.previous"/></a>
-            <a class="btn btn-md btn-info" href="images/next/${lastId}" style="align-content: center" id="${image.id}"><fmt:message key="images.next"/></a>
+            <a class="btn btn-md btn-info"  id="prev"><fmt:message key="images.previous"/></a>
+            <a class="btn btn-md btn-info"  id="next"><fmt:message key="images.next"/></a>
         </div>
 
         <div class="col-sm-15">
@@ -74,4 +70,12 @@
 </div>
 
 </body>
+<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="webjars/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+<script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
+<script type="text/javascript" src="resources/js/imageDatatables.js"></script>
+</html>
 </html>

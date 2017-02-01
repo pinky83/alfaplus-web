@@ -55,7 +55,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByIdWithLazyFields() throws Exception {
-        Image actual = service.getByIdWithLazyFields(IMAGE7.getId(), DOCTOR_ID);
+        Image actual = service.getByIdWithLazyFields(47965, DOCTOR_ID);
         SERIES_MODEL_MATCHER.assertEquals(IMAGE7_SERIES, actual.getSeries());
         STUDY_MODEL_MATCHER.assertEquals(IMAGE7_STUDY, actual.getStudy());
     }

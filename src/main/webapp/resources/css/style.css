@@ -5,3 +5,9 @@ header, footer {
     padding: 5px 20px;
     margin: 6px 0;
 }
+
+#image_thumb {
+    width: 370px;
+    height: 450px;
+    ;
+}

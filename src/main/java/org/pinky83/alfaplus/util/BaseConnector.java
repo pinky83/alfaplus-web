@@ -1,5 +1,8 @@
 package org.pinky83.alfaplus.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.*;
 
 /**
@@ -14,36 +17,44 @@ public class BaseConnector {
     private static String sqlQuery = "SELECT * FROM xpatient";
 
     public static void main(String[] args) {
-        try{
-            Class.forName("org.firebirdsql.jdbc.FBDriver").newInstance();
-        }catch (IllegalAccessException | ClassNotFoundException | InstantiationException ici){
-            ici.printStackTrace();
+//        try{
+//            Class.forName("org.firebirdsql.jdbc.FBDriver").newInstance();
+//        }catch (IllegalAccessException | ClassNotFoundException | InstantiationException ici){
+//            ici.printStackTrace();
+//        }
+//
+//        Connection conn = null;
+//        try{
+//            conn = DriverManager.getConnection(url, strUser, strPassword);
+//            if (conn == null) System.err.println("Чет не могу коннектнуться к базе...");
+//
+//            Statement stmnt = conn.createStatement();
+//            ResultSet result = stmnt.executeQuery(sqlQuery);
+//            int fakeCount =5;
+//
+//            int counter =  result.getMetaData().getColumnCount();
+//            while (result.next()){
+//                System.out.println();
+//                for (int n=1;n < counter+1;n++) {
+//                    Object obj = result.getObject(n);
+//                    String current = obj+" | ";
+//                    if (obj!=null) System.out.print(current);
+//                }
+//                //if(--fakeCount==0)break;
+//            }
+//
+//            stmnt.close();
+//            conn.close();
+//        }catch (SQLException se){
+//            se.printStackTrace();
+//        }
+
+
+        String filename = "C:" + File.separatorChar + "00039740.jpg";
+        try {
+            FileInputStream inputStream = new FileInputStream(filename);
+        }catch (FileNotFoundException fnfe) {
+            fnfe.printStackTrace();
         }
-
-        Connection conn = null;
-        try{
-            conn = DriverManager.getConnection(url, strUser, strPassword);
-            if (conn == null) System.err.println("Чет не могу коннектнуться к базе...");
-
-            Statement stmnt = conn.createStatement();
-            ResultSet result = stmnt.executeQuery(sqlQuery);
-            int fakeCount =5;
-
-            int counter =  result.getMetaData().getColumnCount();
-            while (result.next()){
-                System.out.println();
-                for (int n=1;n < counter+1;n++) {
-                    Object obj = result.getObject(n);
-                    String current = obj+" | ";
-                    if (obj!=null) System.out.print(current);
-                }
-                //if(--fakeCount==0)break;
-            }
-
-            stmnt.close();
-            conn.close();
-        }catch (SQLException se){
-            se.printStackTrace();
-        }
-    }
+  }
 }
