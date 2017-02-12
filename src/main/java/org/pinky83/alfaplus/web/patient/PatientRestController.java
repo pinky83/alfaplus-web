@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Created by Дмитрий on 18.01.2017.
@@ -36,7 +37,7 @@ public class PatientRestController extends AbstractPatientController{
     }
 
     @GetMapping("/full/{id}")
-    public Patient getWithImages(@PathVariable int id) {
+    public Collection<Patient> getWithImages(@PathVariable int id) {
         return super.getWithImages(id);
     }
 
@@ -53,6 +54,13 @@ public class PatientRestController extends AbstractPatientController{
     @GetMapping("/byName/{name}")
     public Collection<Patient> getAllByName(@PathVariable String name) {
         return super.getAllByName(name);
+    }
+
+    @GetMapping("/getByNameWithYear")
+    public Collection<Patient> getAllByNameWithYear(@RequestParam String name, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate age) {
+        Collection<Patient> source = super.getAllByName(name);
+        source =  source.stream().filter(patient -> patient.getBirthDate().toString().equals(age.toString())).collect(Collectors.toList());
+        return source;
     }
 
     @GetMapping("/getBetween")

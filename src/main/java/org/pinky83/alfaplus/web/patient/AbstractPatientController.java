@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.pinky83.alfaplus.AuthorizedUser.ADMIN_ID;
@@ -40,10 +41,12 @@ public abstract class AbstractPatientController {
         return service.getById(id, userId);
     }
 
-    public Patient getWithImages(int id) {
+    public Collection<Patient> getWithImages(int id) {
         int userId = ADMIN_ID;
         LOG.info("get patient {} with images for User {}", id, userId);
-        return service.getByIdWithImages(id, userId);
+        Collection<Patient> result = new ArrayList<>();
+        result.add(service.getByIdWithImages(id, userId));
+        return result;
     }
 
     public Collection<Patient> getAll() {

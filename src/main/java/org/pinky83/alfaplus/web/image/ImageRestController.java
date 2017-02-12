@@ -1,7 +1,9 @@
 package org.pinky83.alfaplus.web.image;
 
 import org.pinky83.alfaplus.model.Image;
+import org.pinky83.alfaplus.model.Patient;
 import org.pinky83.alfaplus.util.exception.NotFoundException;
+import org.pinky83.alfaplus.web.patient.PatientRestController;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +36,13 @@ public class ImageRestController extends AbstractImageController{
     @GetMapping("/{id}")
     public Image get(@PathVariable int id) {
         return super.get(id);
+    }
+
+    @GetMapping("/find/{id}")
+    public List<Image> find(@PathVariable int id) {
+        List<Image> result = new ArrayList<>();
+        result.add(super.get(id));
+        return result;
     }
 
     @GetMapping
@@ -84,6 +94,11 @@ public class ImageRestController extends AbstractImageController{
     @GetMapping("/byDate/{date}")
     public List<Image> getAllByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return super.getAllByDate(date);
+    }
+
+    @GetMapping("/byPatient/{id}")
+    public List<Image> getAllByPatient(@PathVariable int id) {
+        return super.getAllByPatient(id);
     }
 
     @GetMapping("/next/{id}")

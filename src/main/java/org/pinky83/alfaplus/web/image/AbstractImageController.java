@@ -2,6 +2,7 @@ package org.pinky83.alfaplus.web.image;
 
 import org.pinky83.alfaplus.model.Image;
 import org.pinky83.alfaplus.service.ImageService;
+import org.pinky83.alfaplus.service.PatientService;
 import org.pinky83.alfaplus.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,15 @@ public abstract class AbstractImageController {
     @Autowired
     private ImageService service;
 
+    @Autowired
+    private PatientService patientService;
+
     public Image get(int id) {
     int userId = ADMIN_ID;
         LOG.info("get image {} for User {}", id, userId);
-        return service.getById(id, userId);
+        Image image = service.getById(id, userId);
+        if (image.getDescription() == null) image.setDescription(" ");
+        return image;
     }
 
     public Image getWithLazyFields(int id) {
@@ -81,19 +87,33 @@ public abstract class AbstractImageController {
     public List<Image> getLastDay() {
         int userId = ADMIN_ID;
         LOG.info(" getLastDay for User {}", userId);
-        return service.getLastDay(userId);
+        List<Image> images = service.getLastDay(userId);
+        images.forEach(image -> { if (image.getDescription() == null) image.setDescription(" ");});
+        return images;
     }
 
     public List<Image> getAllByDate(LocalDate date) {
         int userId = ADMIN_ID;
         LOG.info(" getAll by date {} for User {}", date, userId);
-        return service.getAllByDate(date != null ? date : TimeUtil.MIN_DATE, userId);
+        List<Image> images = service.getAllByDate(date != null ? date : TimeUtil.MIN_DATE, userId);
+        images.forEach(image -> { if (image.getDescription() == null) image.setDescription(" ");});
+        return images;
+    }
+
+    public List<Image> getAllByPatient(int id) {
+        int userId = ADMIN_ID;
+        LOG.info(" getAll by Patient {} for User {}", id, userId);
+        List<Image> images = patientService.getByIdWithImages(id, userId).getImages();
+        images.forEach(image -> { if (image.getDescription() == null) image.setDescription(" ");});
+        return images;
     }
 
     public List<Image> getNextPage(int lastId) {
         int userId = ADMIN_ID;
         LOG.info("getNextPage starts after id={} for User {}", lastId, userId);
-        return service.getNextPage(new PageRequest(0, 20), lastId, userId).getContent();
+        List<Image> images = service.getNextPage(new PageRequest(0, 20), lastId, userId).getContent();
+        images.forEach(image -> { if (image.getDescription() == null) image.setDescription(" ");});
+        return images;
     }
 
     public List<Image> getPreviousPage(int firstId) {
@@ -103,6 +123,7 @@ public abstract class AbstractImageController {
         List<Image> dest = new ArrayList<>();
         source.forEach(dest::add);
         Collections.reverse(dest);
+        dest.forEach(image -> { if (image.getDescription() == null) image.setDescription(" ");});
         return dest;
     }
 }

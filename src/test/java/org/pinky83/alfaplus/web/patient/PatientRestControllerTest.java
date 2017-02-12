@@ -70,6 +70,7 @@ public class PatientRestControllerTest extends AbstractControllerTest{
                     .param("date1", PATIENT9.getBirthDate().toString())
                     .param("date2", PATIENT9.getBirthDate().toString()))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentListMatcher(expected));
     }
@@ -113,4 +114,17 @@ public class PatientRestControllerTest extends AbstractControllerTest{
         MATCHER.assertEquals(updated, patientService.getById(PATIENT8.getId(), ADMIN_ID));
     }
 
+    @Test
+    public void testGetAllByNameWithYear() throws Exception {
+        List<Patient> expected = new ArrayList<>();
+        expected.add(PATIENT8);
+        mockMvc.perform(get(REST_URL  + "getByNameWithYear/")
+                .param("name", "яковенко")
+                .param("age", PATIENT8.getBirthDate().toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentListMatcher(expected));
+
+    }
 }

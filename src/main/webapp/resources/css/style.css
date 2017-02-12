@@ -9,5 +9,8 @@ header, footer {
 #image_thumb {
     width: 370px;
     height: 450px;
-    ;
+}
+
+#home, #Images, #Patients {
+    height: 800px;
 }

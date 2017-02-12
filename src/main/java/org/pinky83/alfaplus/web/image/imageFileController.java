@@ -24,7 +24,7 @@ public class imageFileController {
 
     @GetMapping(value = "/{id}")
     public void getImageFile(@PathVariable String id, HttpServletResponse response, HttpServletRequest request) throws IOException{
-
+//TODO need to use filename from hidden column in datatable
         String filename = "D:" + File.separatorChar + "alfaplus" + File.separatorChar + "Images" + File.separatorChar + id + ".jpg";
 
         response.setContentType("image/jpeg");

@@ -98,6 +98,7 @@ public class ImageRestControllerTest extends AbstractControllerTest{
     public void testGetLastDay() throws Exception {
         ResultActions action = mockMvc.perform(get(REST_URL + "last")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk());
 
         List<Image> result = JsonUtil.readValues(TestUtil.getContent(action), Image.class);
