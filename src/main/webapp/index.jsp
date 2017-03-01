@@ -16,8 +16,8 @@
                     <%--<div class="shadow">--%>
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#Home"><fmt:message key="app.home"/></a></li>
-                            <li><a data-toggle="tab" href="#Images"><fmt:message key="images.title"/> </a></li>
-                            <li><a data-toggle="tab" href="#Patients"><fmt:message key="patients.title"/> </a></li>
+                            <li><a data-toggle="tab" href="#Images"><span class="glyphicon glyphicon-film"> <fmt:message key="images.title"/></span></a></li>
+                            <li><a data-toggle="tab" href="#Patients" class="glyphicon glyphicon-user"> <fmt:message key="patients.title"/> </a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -31,6 +31,36 @@
                                         Имплементация функциональности программного комплекса "Альфаплюс"
                                         для цифровых флюорографов .
                                     </p>
+                                </div>
+                                <br>
+                                <div id="Login_form" class="panel panel-default col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4 col-xs-offset-3 col-xs-3" style="align-items: center;;">
+                                    <div class="panel-heading">Авторизация</div>
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="control-label col-xs-2 glyphicon-envelope glyphicon-envelope"></label>
+                                            <div class="col-xs-10">
+                                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="control-label col-xs-2 glyphicon glyphicon-lock"></label>
+                                            <div class="col-xs-10">
+                                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-xs-offset-2 col-xs-10">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox"> Remember me</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-xs-offset-2 col-xs-10">
+                                                <button type="submit" class="btn btn-primary glyphicon glyphicon-log-in"> Login</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
 
