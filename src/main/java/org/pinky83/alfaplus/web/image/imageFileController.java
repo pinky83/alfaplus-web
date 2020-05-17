@@ -1,13 +1,17 @@
 package org.pinky83.alfaplus.web.image;
 
+import org.pinky83.alfaplus.configuration.ApplicationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import static org.pinky83.alfaplus.web.image.imageFileController.URL;
 
@@ -21,12 +25,16 @@ import static org.pinky83.alfaplus.web.image.imageFileController.URL;
 @RequestMapping(URL)
 public class imageFileController {
     static final String URL = "/thumb";
+    String pathPart;
 
-    @GetMapping(value = "/{id}")
-    public void getImageFile(@PathVariable String id, HttpServletResponse response, HttpServletRequest request) throws IOException{
-//TODO need to use filename from hidden column in datatable
-        String filename = "D:" + File.separatorChar + "alfaplus" + File.separatorChar + "Images" + File.separatorChar + id + ".jpg";
+	@Autowired
+	public imageFileController(ApplicationProperties properties) {
+		pathPart = properties.getProperty("file.path") + "alfaplus" + File.separatorChar + "Images" + File.separatorChar;
+	}
 
+	@GetMapping(value = "/{id}")
+    public void getImageFile(@PathVariable String id, HttpServletResponse response) throws IOException{
+        String filename = pathPart + id + ".jpg";
         response.setContentType("image/jpeg");
         File image = new File(filename);
         response.setContentLength((int)image.length());
